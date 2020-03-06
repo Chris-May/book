@@ -55,7 +55,8 @@ image::images/apwp_1302.png[]
 === Implicit Versus Explicit Dependencies
 
 Depending on your particular brain type, you may have a slight
-feeling of unease at the back of your mind at this point.((("dependency injection", "implicit versus explicit dependencies")))  Let's bring it out
+feeling of unease at the back of your mind at this point.((("dependency injection", "implicit versus explicit dependencies")))
+Let's bring it out
 into the open. We've shown you two ways of managing
 dependencies and testing them.
 
@@ -130,7 +131,8 @@ def test_rolls_back_uncommitted_work_by_default(sqlite_session_factory):
 === Aren't Explicit Dependencies Totally Weird and Java-y?
 
 If you're used to the way things normally happen in Python, you'll be thinking
-all this is a bit weird.((("dependency injection", "explicit dependencies are better than implicit dependencies")))((("importing dependenies")))  The standard way to do things is to declare our
+all this is a bit weird.((("dependency injection", "explicit dependencies are better than implicit dependencies")))((("importing dependenies")))
+The standard way to do things is to declare our
 dependency implicitly by simply importing it, and then if we ever need to
 change it for tests, we can monkeypatch, as is Right and True in dynamic
 languages:
@@ -191,7 +193,8 @@ strictly speaking, and using them would make our application code marginally
 more complex. But in return, we'd get tests that are easier to write and
 manage.
 
-On top of that, declaring((("dependency inversion principle", "declaring explicit dependency as example of")))((("abstractions", "explicit dependencies are more abstract"))) an explicit dependency is an example of the
+On top of that, declaring((("dependency inversion principle", "declaring explicit dependency as example of")))((("abstractions", "explicit dependencies are more abstract")))
+an explicit dependency is an example of the
 dependency inversion principle—rather than having an (implicit) dependency on
 a _specific_ detail, we have an (explicit) dependency on an _abstraction_:
 
@@ -228,7 +231,8 @@ That's extra (duplicated) cruft for Flask, Redis, and our tests. Moreover,
 putting all the responsibility for passing dependencies to the right handler
 onto the message bus feels like a violation of the SRP.
 
-Instead, we'll((("composition root")))((("bootstrapping", "dependency injection with"))) reach for a pattern called _Composition Root_ (a bootstrap
+Instead, we'll((("composition root")))((("bootstrapping", "dependency injection with")))
+reach for a pattern called _Composition Root_ (a bootstrap
 script to you and me),footnote:[Because Python is not a "pure" OO language, Python developers aren't necessarily used to the concept of needing to _compose_ a set of objects into a working application. We just pick our entrypoint and run code from top to bottom.]
  and we'll do a bit of "manual DI" (dependency injection without a
 framework). See <<bootstrap_new_image>>.footnote:[Mark Seemann calls this https://oreil.ly/iGpDL[_Pure DI_] or sometimes _Vanilla DI_.]
@@ -267,9 +271,11 @@ image::images/apwp_1303.png[]
 
 === Preparing Handlers: Manual DI with Closures and Partials
 
-One way to turn((("dependency injection", "manual DI with closures or partial functions"))) a function with dependencies into one that's ready to be
+One way to turn((("dependency injection", "manual DI with closures or partial functions")))
+a function with dependencies into one that's ready to be
 called later with those dependencies _already injected_ is to use closures or
-partial functions((("closures", "dependency injection using")))((("partial functions", "dependency injection with"))) to compose the function with its dependencies:
+partial functions((("closures", "dependency injection using")))((("partial functions", "dependency injection with")))
+to compose the function with its dependencies:
 
 
 [[di_with_partial_functions_examples]]
@@ -308,7 +314,8 @@ allocate_composed(cmd)
 ----
 ====
 
-<1> The difference((("closures", "difference from partial functions")))((("partial functions", "difference from closures"))) between closures (lambdas or named functions) and
+<1> The difference((("closures", "difference from partial functions")))((("partial functions", "difference from closures")))
+between closures (lambdas or named functions) and
     `functools.partial` is that the former use
     https://docs.python-guide.org/writing/gotchas/#late-binding-closures[late
     binding of variables], which can be a source of confusion if
@@ -344,7 +351,8 @@ sosn_composed(event)  # will have email.send_mail already injected in
 === An Alternative Using Classes
 
 Closures and partial functions will feel familiar to people who've done a bit
-of functional programming.((("dependency injection", "using classes")))((("classes, dependency injection using"))) Here's an alternative using classes, which may
+of functional programming.((("dependency injection", "using classes")))((("classes, dependency injection using")))
+Here's an alternative using classes, which may
 appeal to others. It requires rewriting all our handler functions as
 classes, though:
 
@@ -395,7 +403,8 @@ Use whichever you and your team feel more comfortable with.((("dependency inject
 === A Bootstrap Script
 
 
-We want our bootstrap((("bootstrapping", "bootstrapping script, capabilities of"))) script to do the following:
+We want our bootstrap((("bootstrapping", "bootstrapping script, capabilities of")))
+script to do the following:
 
 1. Declare default dependencies but allow us to override them
 2. Do the "init" stuff that we need to get our app started
@@ -555,7 +564,8 @@ DRY-Python crew's https://github.com/dry-python/dependencies[dependencies].
 === Message Bus Is Given Handlers at Runtime
 
 Our message bus will no longer be static; it needs to have the already-injected
-handlers given to it.((("message bus", "class given handlers at runtime"))) So we turn it from being a module into a configurable
+handlers given to it.((("message bus", "class given handlers at runtime")))
+So we turn it from being a module into a configurable
 class:
 
 
@@ -639,7 +649,8 @@ What else changes ((("handlers", "event and command handlers in message bus")))(
 
 === Using Bootstrap in Our Entrypoints
 
-In our application's entrypoints, we now((("bootstrapping", "using in entrypoints")))((("Flask framework", "calling bootstrap in entrypoints"))) just call `bootstrap.bootstrap()`
+In our application's entrypoints, we now((("bootstrapping", "using in entrypoints")))((("Flask framework", "calling bootstrap in entrypoints")))
+just call `bootstrap.bootstrap()`
 and get a message bus that's ready to go, rather than configuring a UoW and the
 rest of it:
 
@@ -686,7 +697,8 @@ rest of it:
 === Initializing DI in Our Tests
 
 In tests, we can use `bootstrap.bootstrap()` with overridden defaults to get a
-custom message bus.((("message bus", "getting custom with overridden bootstrap defaults")))((("bootstrapping", "initializing dependency injection in tests")))((("testing", "integration test for overriding bootstrap defaults"))) Here's an example in an integration test:
+custom message bus.((("message bus", "getting custom with overridden bootstrap defaults")))((("bootstrapping", "initializing dependency injection in tests")))((("testing", "integration test for overriding bootstrap defaults")))
+Here's an example in an integration test:
 
 
 [[bootstrap_view_tests]]
@@ -760,7 +772,8 @@ it comes to your own projects.
 
 === Building an Adapter "Properly": A Worked Example
 
-To really get a feel((("adapters", "building adapter and doing dependency injection for it", id="ix_adapDI"))) for how it all works, let's work through an example of how
+To really get a feel((("adapters", "building adapter and doing dependency injection for it", id="ix_adapDI")))
+for how it all works, let's work through an example of how
 you might "properly" build an adapter and do dependency injection for it.
 
 At the moment, we have two types of dependencies:
@@ -799,7 +812,8 @@ through how you might define a more complex dependency.
 
 ==== Define the Abstract and Concrete Implementations
 
-We'll imagine a more generic notifications API.((("adapters", "building adapter and doing dependency injection for it", "defining abstract and concrete implementations")))((("abstract base classes (ABCs)", "defining for notifications"))) Could be
+We'll imagine a more generic notifications API.((("adapters", "building adapter and doing dependency injection for it", "defining abstract and concrete implementations")))((("abstract base classes (ABCs)", "defining for notifications")))
+Could be
 email, could be SMS, could be Slack posts one day.
 
 
@@ -833,7 +847,8 @@ class EmailNotifications(AbstractNotifications):
 ====
 
 
-We change the dependency((("bootstrapping", "changing notifications dependency in bootstrap script"))) in the bootstrap script:
+We change the dependency((("bootstrapping", "changing notifications dependency in bootstrap script")))
+in the bootstrap script:
 
 [[notifications_in_bus]]
 .Notifications in message bus (src/allocation/bootstrap.py)
@@ -854,7 +869,8 @@ We change the dependency((("bootstrapping", "changing notifications dependency i
 
 ==== Make a Fake Version for Your Tests
 
-We work through and define((("faking", "FakeNotifications for unit testing"))) a fake version for unit testing:
+We work through and define((("faking", "FakeNotifications for unit testing")))
+a fake version for unit testing:
 
 
 [[fake_notifications]]
@@ -901,7 +917,8 @@ And we use it in our tests:
 
 Now we test the real thing, usually with an end-to-end or integration
 test.  We've used https://github.com/mailhog/MailHog[MailHog] as a
-real-ish email((("Docker dev environment with real fake email server"))) server for our Docker dev environment:
+real-ish email((("Docker dev environment with real fake email server")))
+server for our Docker dev environment:
 
 
 [[docker_compose_with_mailhog]]
@@ -941,7 +958,8 @@ services:
 ====
 
 
-In our integration((("bootstrapping", "using to build message bus that talks to real notification class"))) tests, we use the real `EmailNotifications` class,
+In our integration((("bootstrapping", "using to build message bus that talks to real notification class")))
+tests, we use the real `EmailNotifications` class,
 talking to the MailHog server in the Docker cluster:
 
 
@@ -1008,7 +1026,8 @@ You could do two things ((("adapters", "exercise for the reader")))for practice 
 === Wrap-Up
 
 * Once you have more than one adapter, you'll start to feel a lot of pain
-  from passing dependencies around((("bootstrapping", "dependency injection and bootstrap recap")))((("dependency injection", "recap of DI and bootstrap"))) manually, unless you do some kind of
+  from passing dependencies around((("bootstrapping", "dependency injection and bootstrap recap")))((("dependency injection", "recap of DI and bootstrap")))
+manually, unless you do some kind of
   _dependency injection._
 
 * Setting up dependency injection is just one of many typical

@@ -2,7 +2,8 @@
 [appendix]
 == Summary Diagram and Table
 
-Here's what our architecture looks((("architecture, summary diagram and table", id="ix_archsumm"))) like by the end of the book:
+Here's what our architecture looks((("architecture, summary diagram and table", id="ix_archsumm")))
+like by the end of the book:
 
 [[recap_diagram]]
 image::images/apwp_aa01.png["diagram showing all components: flask+eventconsumer, service layer, adapters, domain etc"]

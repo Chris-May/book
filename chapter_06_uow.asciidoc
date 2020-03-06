@@ -5,7 +5,8 @@ In this chapter we'll introduce the final piece of the puzzle that ties
 together ((("Unit of Work pattern", id="ix_UoW")))the Repository and Service Layer patterns: the _Unit of Work_ pattern.
 
 If the Repository pattern is our abstraction over the idea of persistent storage,
-the Unit of Work (UoW) pattern is our abstraction over the idea of _atomic operations_.((("atomic operations"))) It
+the Unit of Work (UoW) pattern is our abstraction over the idea of _atomic operations_.((("atomic operations")))
+It
 will allow us to finally and fully decouple our service layer from the data layer.((("UoW", see="Unit of Work pattern")))
 
 <<before_uow_diagram>> shows that, currently, a lot of communication occurs
@@ -38,7 +39,8 @@ collaborates with the UoW (we like to think of the UoW as being part of the
 service layer), but neither the service function itself nor Flask now needs
 to talk directly to the database.((("Unit of Work pattern", "managing database state")))((("databases", "Unit of Work pattern managing state for")))
 
-And we'll do it all using a lovely piece((("context manager"))) of Python syntax, a context manager.
+And we'll do it all using a lovely piece((("context manager")))
+of Python syntax, a context manager.
 
 [role="width-75"]
 [[after_uow_diagram]]
@@ -50,7 +52,8 @@ image::images/apwp_0602.png[]
 
 //TODO (DS) do you talk anywhere about multiple repositories?
 
-Let's see the unit of work (or UoW, which we pronounce "you-wow") in action. Here's how the service((("Unit of Work pattern", "collaboration with repository")))((("repositories", "Unit of Work collaborating with"))) layer will look when we're finished:
+Let's see the unit of work (or UoW, which we pronounce "you-wow") in action. Here's how the service((("Unit of Work pattern", "collaboration with repository")))((("repositories", "Unit of Work collaborating with")))
+layer will look when we're finished:
 
 [[uow_preview]]
 .Preview of unit of work in action (src/allocation/service_layer/services.py)
@@ -78,9 +81,11 @@ def allocate(
 The UoW acts as a single entrypoint to our persistent storage, and it
  keeps track of what objects were loaded and of the latest state.footnote:[
 You may have come across the use of the word _collaborators_ to describe objects that work
-together to achieve a goal.((("collaborators"))) The unit of work and the repository are a great
+together to achieve a goal.((("collaborators")))
+The unit of work and the repository are a great
 example of collaborators in the object-modeling sense.
-In responsibility-driven design, clusters of objects((("object neighborhoods"))) that collaborate in their
+In responsibility-driven design, clusters of objects((("object neighborhoods")))
+that collaborate in their
 roles are called _object neighborhoods_, which is, in our professional opinion,
 totally adorable.]
 
@@ -133,7 +138,8 @@ def test_uow_can_retrieve_a_batch_and_allocate_to_it(session_factory):
 <3> We call `commit()` on it when we're done.
 
 For the curious, the `insert_batch` and `get_allocated_batch_ref` helpers
-look like((("SQL", "helpers for Unit of Work"))) this:
+look like((("SQL", "helpers for Unit of Work")))
+this:
 
 [[sql_helpers]]
 .Helpers for doing SQL stuff (tests/integration/test_uow.py)
@@ -196,11 +202,13 @@ class AbstractUnitOfWork(abc.ABC):
 
 <2> If you've never seen a context manager, +++<code>__enter__</code>+++ and +++<code>__exit__</code>+++ are
     the two magic methods that execute when we enter the `with` block and
-    when we exit it, respectively.((("&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f; magic methods", primary-sortas="enter and exit"))) They're our setup and teardown phases.((("magic methods", "&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f;", secondary-sortas="enter")))
+    when we exit it, respectively.((("&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f; magic methods", primary-sortas="enter and exit")))
+They're our setup and teardown phases.((("magic methods", "&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f;", secondary-sortas="enter")))
 
 <3> We'll call this method to explicitly commit our work when we're ready.
 
-<4> If we don't((("rollbacks"))) commit, or if we exit the context manager by raising an error,
+<4> If we don't((("rollbacks")))
+commit, or if we exit the context manager by raising an error,
     we do a `rollback`. (The rollback has no effect if `commit()` has been
     called. Read on for more discussion of this.)
 
@@ -268,7 +276,8 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
 ==== Fake Unit of Work for Testing
 
-Here's how we use a fake UoW in((("Unit of Work pattern", "and its context manager", "fake UoW for testing")))((("faking", "FakeUnitOfWork for service layer testing")))((("testing", "fake UoW for service layer testing"))) our service-layer tests:
+Here's how we use a fake UoW in((("Unit of Work pattern", "and its context manager", "fake UoW for testing")))((("faking", "FakeUnitOfWork for service layer testing")))((("testing", "fake UoW for service layer testing")))
+our service-layer tests:
 
 [[fake_unit_of_work]]
 .Fake UoW (tests/unit/test_services.py)
@@ -423,7 +432,8 @@ def test_rolls_back_on_error(session_factory):
 
 TIP: We haven't shown it here, but it can be worth testing some of the more
     "obscure" database behavior, like transactions, against the "real"
-    database—that is, the same engine.((("databases", "testing transactions against real database"))) For now, we're getting away with using
+    database—that is, the same engine.((("databases", "testing transactions against real database")))
+For now, we're getting away with using
     SQLite instead of Postgres, but in <<chapter_07_aggregate>>, we'll switch
     some of the tests to using the real database. It's convenient that our UoW
     class makes that easy!
@@ -490,7 +500,8 @@ so either the user did one, or we blow their changes away. Harsh but simple.
 
 === Examples: Using UoW to Group Multiple Operations into an Atomic Unit
 
-Here are a few examples showing the Unit of Work pattern in use.((("Unit of Work pattern", "using UoW to group multiple operations into atomic unit", id="ix_UoWatom")))((("atomic operations", "using Unit of Work to group  operations into atomic unit", id="ix_atomops"))) You can
+Here are a few examples showing the Unit of Work pattern in use.((("Unit of Work pattern", "using UoW to group multiple operations into atomic unit", id="ix_UoWatom")))((("atomic operations", "using Unit of Work to group  operations into atomic unit", id="ix_atomops")))
+You can
 see how it leads to simple reasoning about what blocks of code happen
 together.
 
@@ -549,7 +560,8 @@ def change_batch_quantity(batchref: str, new_qty: int, uow: AbstractUnitOfWork):
 === Tidying Up the Integration Tests
 
 We now have three sets of tests, all essentially pointing at the database:
-_test_orm.py_, _test_repository.py_, and _test_uow.py_. Should((("testing", "Unit of Work with integration tests", "tidying up tests")))((("Unit of Work pattern", "tidying up integration tests"))) we throw any
+_test_orm.py_, _test_repository.py_, and _test_uow.py_. Should((("testing", "Unit of Work with integration tests", "tidying up tests")))((("Unit of Work pattern", "tidying up integration tests")))
+we throw any
 away?
 
 ====
@@ -609,7 +621,8 @@ that the context manager is a really nice Pythonic way
 of visually grouping code into blocks that we want to happen atomically.((("Unit of Work pattern", "benefits of using")))
 
 This pattern is so useful, in fact, that SQLAlchemy already uses a UoW
-in the shape of the `Session` object.((("SQLAlchemy", "Session object")))((("Session object"))) The `Session` object in SQLAlchemy is the way
+in the shape of the `Session` object.((("SQLAlchemy", "Session object")))((("Session object")))
+The `Session` object in SQLAlchemy is the way
 that your application loads data from the database.
 
 Every time you load a new entity from the database, the session begins to _track_
@@ -683,7 +696,8 @@ SQLAlchemy already implements this pattern::
 
 Lastly, we're motivated again by the dependency inversion principle: our
 service layer depends on a thin abstraction, and we attach a concrete
-implementation at the outside edge of the system.((("dependency inversion principle"))) This lines up nicely with
+implementation at the outside edge of the system.((("dependency inversion principle")))
+This lines up nicely with
 SQLAlchemy's own
 https://oreil.ly/tS0E0[recommendations]:
 

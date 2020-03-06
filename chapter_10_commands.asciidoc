@@ -30,7 +30,8 @@ git checkout chapter_09_all_messagebus
 === Commands and Events
 
 Like events, _commands_ are a type of message--instructions sent by one part of
-a system to another.((("events", "commands versus", id="ix_evntcmd")))((("commands", "events versus", id="ix_cmdevnt"))) We usually represent commands with dumb data
+a system to another.((("events", "commands versus", id="ix_evntcmd")))((("commands", "events versus", id="ix_cmdevnt")))
+We usually represent commands with dumb data
 structures and can handle them in much the same way as events.
 
 The differences between commands and events, though, are important.
@@ -68,7 +69,8 @@ e|      e| Event e| Command
 //                       "create batch" -> "batch created"
 // (EJ3) "ChangeBatchQuantity" -> "AllocationRequired" will be a less trivial example
 
-What kinds of commands((("commands", "events versus", startref="ix_cmdevnt")))((("commands", "in our system now"))) do we have in our system right now?
+What kinds of commands((("commands", "events versus", startref="ix_cmdevnt")))((("commands", "in our system now")))
+do we have in our system right now?
 
 [[commands_dot_py]]
 .Pulling out some commands (src/allocation/domain/commands.py)
@@ -107,8 +109,10 @@ class ChangeBatchQuantity(Command):  #<3>
 
 
 Just changing ((("events", "commands versus", startref="ix_evntcmd")))the names and verbs is all very well, but that won't
-change the behavior of our system. ((("exception handling, differences for events and commands"))) We want to treat events and commands similarly,
-but not exactly the same.((("message bus", "dispatching events and commands differently")))  Let's see how our message bus changes:
+change the behavior of our system. ((("exception handling, differences for events and commands")))
+We want to treat events and commands similarly,
+but not exactly the same.((("message bus", "dispatching events and commands differently")))
+Let's see how our message bus changes:
 
 [[messagebus_dispatches_differently]]
 .Dispatch events and commands differently (src/allocation/service_layer/messagebus.py)
@@ -169,7 +173,8 @@ def handle_event(
 <2> It catches and logs errors but doesn't let them interrupt
     message processing.
 
-And here's((("commands", "exception handling"))) how we do commands:
+And here's((("commands", "exception handling")))
+how we do commands:
 
 [[handle_command]]
 .Commands reraise exceptions (src/allocation/service_layer/messagebus.py)
@@ -246,12 +251,14 @@ available, depending on how you look at it. Later, we might allocate those
 same beanbags to another customer, causing a headache for customer support.
 
 In our allocation service, though, we've already taken steps to prevent that
-happening.((("aggregates", "acting as consistency boundaries")))((("consistency boundaries", "aggregates acting as"))) We've carefully identified _aggregates_ that act as consistency
+happening.((("aggregates", "acting as consistency boundaries")))((("consistency boundaries", "aggregates acting as")))
+We've carefully identified _aggregates_ that act as consistency
 boundaries, and we've introduced a _UoW_ that manages the atomic
 success or failure of an update to an aggregate.((("Unit of Work pattern", "UoW managing success or failure of aggregate update")))
 
 For example, when we allocate stock to an order, our consistency boundary is the
-`Product` aggregate.((("Product object", "acting as consistency boundary"))) This means that we can't accidentally overallocate: either
+`Product` aggregate.((("Product object", "acting as consistency boundary")))
+This means that we can't accidentally overallocate: either
 a particular order line is allocated to the product, or it is not--there's no
 room for inconsistent states.
 
@@ -289,7 +296,8 @@ Then we should send them an email to congratulate them
 
 Using the techniques we've already discussed in this book, we decide that we
 want to build a new `History` aggregate that records orders and can raise domain
-events when rules are met.((("aggregates", "History aggregate recording orders and raising domain events"))) We will structure the code like this:
+events when rules are met.((("aggregates", "History aggregate recording orders and raising domain events")))
+We will structure the code like this:
 
 
 [[vip_customer_listing]]
@@ -361,7 +369,8 @@ Using this code, we can gain some intuition about error handling in an
 event-driven system.
 
 In our current implementation, we raise events about an aggregate _after_ we
-persist our state to the database.((("aggregates", "raising events about"))) What if we raised those events _before_ we
+persist our state to the database.((("aggregates", "raising events about")))
+What if we raised those events _before_ we
 persisted, and committed all our changes at the same time? That way, we could be
 sure that all the work was complete. Wouldn't that be safer?
 
@@ -390,7 +399,8 @@ complex.((("events", "events, commands, and error handling", startref="ix_evntcm
 === Recovering from Errors Synchronously
 
 Hopefully we've convinced you that it's OK for events to fail independently
-from the commands that raised them.((("errors, recovering from synchronously")))((("commands", "events, commands, and error handling", "recovering from errors synchronously"))) What should we do, then, to make sure we
+from the commands that raised them.((("errors, recovering from synchronously")))((("commands", "events, commands, and error handling", "recovering from errors synchronously")))
+What should we do, then, to make sure we
 can recover from errors when they inevitably occur?
 
 The first thing we need is to know _when_ an error has occurred, and for that we
@@ -500,7 +510,8 @@ WARNING: At some point, regardless of `tenacity`, we'll have to give up trying t
 === Wrap-Up
 
 In this book we decided to introduce the concept of events before the concept
-of commands, but other guides often do it the other way around.((("commands", "splitting commands and events, trade-offs")))((("events", "splitting command and events, trade-offs")))  Making
+of commands, but other guides often do it the other way around.((("commands", "splitting commands and events, trade-offs")))((("events", "splitting command and events, trade-offs")))
+Making
 explicit the requests that our system can respond to by giving them a name
 and their own data structure is quite a fundamental thing to do.  You'll
 sometimes see people use the name _Command Handler_ pattern to describe what

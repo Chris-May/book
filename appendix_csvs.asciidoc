@@ -3,7 +3,8 @@
 == Swapping Out the Infrastructure: pass:[<span class="keep-together">Do Everything with CSVs</span>]
 
 This appendix is intended as a little illustration of the benefits of the
-Repository, Unit of Work, and Service Layer patterns.((("CSVs, doing everything with", id="ix_CSV"))) It's intended to
+Repository, Unit of Work, and Service Layer patterns.((("CSVs, doing everything with", id="ix_CSV")))
+It's intended to
 follow from <<chapter_06_uow>>.
 
 Just as we finish building out our Flask API and getting it ready for release,
@@ -178,7 +179,8 @@ with CSVs underlying them instead of a database. And as you'll see, it really is
 === Implementing a Repository and Unit of Work for CSVs
 
 
-Here's what a CSV-based repository could look like.((("repositories", "CSV-based repository")))  It abstracts away all the
+Here's what a CSV-based repository could look like.((("repositories", "CSV-based repository")))
+It abstracts away all the
 logic for reading CSVs from disk, including the fact that it has to read _two
 different CSVs_ (one for batches and one for allocations), and it gives us just
 the familiar `.list()` API, which provides the illusion of an in-memory
@@ -235,7 +237,8 @@ class CsvRepository(repository.AbstractRepository):
 // TODO (hynek) re self._load(): DUDE! no i/o in init!
 
 
-And here's((("Unit of Work pattern", "UoW for CSVs"))) what a UoW for CSVs would look like:
+And here's((("Unit of Work pattern", "UoW for CSVs")))
+what a UoW for CSVs would look like:
 
 
 

@@ -3,7 +3,8 @@
 == Repository and Unit of Work pass:[<span class="keep-together">Patterns with Django</span>]
 
 Suppose you wanted to use Django instead of SQLAlchemy and Flask. How
-might things look?((("Django", id="ix_Django"))) The first thing is to choose where to install it.((("Django", "installing"))) We put it in a separate
+might things look?((("Django", id="ix_Django")))
+The first thing is to choose where to install it.((("Django", "installing"))) We put it in a separate
 package next to our main allocation code:
 
 
@@ -229,7 +230,8 @@ NOTE: As in <<chapter_02_repository>>, we use dependency inversion.
 === Unit of Work Pattern with Django
 
 
-The tests((("Unit of Work pattern", "with Django", id="ix_UoWDjango")))((("Django", "Unit of Work pattern with", id="ix_DjangoUoW"))) don't change too much:
+The tests((("Unit of Work pattern", "with Django", id="ix_UoWDjango")))((("Django", "Unit of Work pattern with", id="ix_DjangoUoW")))
+don't change too much:
 
 [[test_uow_django]]
 .Adapted UoW tests (tests/integration/test_uow.py)
@@ -399,7 +401,8 @@ around the workflow of state changes.  The Django admin bypasses all of that.
 === What to Do If You Already Have Django
 
 So what should you do if you want to apply some of the patterns in this book
-to a Django app?((("Django", "applying patterns to Django app"))) We'd say the following:
+to a Django app?((("Django", "applying patterns to Django app")))
+We'd say the following:
 
 * The Repository and Unit of Work patterns are going to be quite a lot of work. The
   main thing they will buy you in the short term is faster unit tests, so
@@ -431,7 +434,8 @@ your _models.py_, which you can then keep as minimal as possible.
 Suppose you're working on a Django project that you're not sure is going
 to get complex enough to warrant the patterns we recommend, but you still
 want to put a few steps in place to make your life easier, both in the medium
-term and if you want to migrate to some of our patterns later.((("Django", "applying patterns to Django app", "steps along the way"))) Consider the following:
+term and if you want to migrate to some of our patterns later.((("Django", "applying patterns to Django app", "steps along the way")))
+Consider the following:
 
 * One piece of advice we've heard is to put a __logic.py__ into every Django app from day one. This gives you a place to put business logic, and to keep your
   forms, views, and models free of business logic. It can become a stepping-stone

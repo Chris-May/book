@@ -2,20 +2,23 @@
 == TDD in High Gear and Low Gear
 
 We've introduced the service layer to capture some of the additional
-orchestration responsibilities we need from a working application.((("test-driven development (TDD)", id="ix_TDD"))) The service layer helps us
+orchestration responsibilities we need from a working application.((("test-driven development (TDD)", id="ix_TDD")))
+The service layer helps us
 clearly define our use cases and the workflow for each: what
 we need to get from our repositories, what pre-checks and current state
 validation we should do, and what we save at the end.
 
 But currently, many of our unit tests operate at a lower level, acting
-directly on the model.((("test-driven development (TDD)", "unit tests operating at lower level, acting directly on model"))) In this chapter we'll discuss the trade-offs
+directly on the model.((("test-driven development (TDD)", "unit tests operating at lower level, acting directly on model")))
+In this chapter we'll discuss the trade-offs
 involved in moving those tests up to the service-layer level, and
 some more general testing guidelines.
 
 
 .Harry Says: Seeing a Test Pyramid in Action Was a Light-Bulb Moment
 *******************************************************************************
-Here are a((("test-driven development (TDD)", "test pyramid, examining"))) few words from Harry directly:
+Here are a((("test-driven development (TDD)", "test pyramid, examining")))
+few words from Harry directly:
 
 _I was initially skeptical of all Bob's architectural patterns, but seeing
 an actual test pyramid made me a convert._
@@ -35,7 +38,8 @@ my testing life._
 === How Is Our Test Pyramid Looking?
 
 Let's see what this move to using a service layer, with its own service-layer tests,
-does to our((("test-driven development (TDD)", "test pyramid with service layer added")))((("service layer", "using, test pyramid and"))) test pyramid:
+does to our((("test-driven development (TDD)", "test pyramid with service layer added")))((("service layer", "using, test pyramid and")))
+test pyramid:
 
 [[test_pyramid]]
 .Counting types of tests
@@ -135,7 +139,8 @@ TIP: Every line of code that we put in a test is like a blob of glue, holding
 === On Deciding What Kind of Tests to Write
 
 You might be asking yourself, "Should I rewrite all my unit tests, then? Is it
-wrong to write((("test-driven development (TDD)", "deciding what kinds of tests to write")))((("coupling", "trade-off between design feedback and")))((("domain model", "deciding whether to write tests against"))) tests against the domain model?" To answer those questions, it's
+wrong to write((("test-driven development (TDD)", "deciding what kinds of tests to write")))((("coupling", "trade-off between design feedback and")))((("domain model", "deciding whether to write tests against")))
+tests against the domain model?" To answer those questions, it's
 important to understand the trade-off between coupling and design feedback (see
 <<test_spectrum_diagram>>).
 
@@ -155,7 +160,8 @@ image::images/apwp_0501.png[]
 ----
 
 
-Extreme programming (XP) exhorts((("extreme programming (XP), exhortation to listen to the code"))) us to "listen to the code." When we're writing
+Extreme programming (XP) exhorts((("extreme programming (XP), exhortation to listen to the code")))
+us to "listen to the code." When we're writing
 tests, we might find that the code is hard to use or notice a code smell. This
 is a trigger for us to refactor, and to reconsider our design.
 
@@ -196,14 +202,16 @@ pass:[<span class="keep-together">implementation</span>].
 === High and Low Gear
 
 Most of the time, when we are adding a new feature or fixing a bug, we don't
-need to make extensive changes to the domain model.((("test-driven development (TDD)", "high and low gear"))) In these cases, we prefer
+need to make extensive changes to the domain model.((("test-driven development (TDD)", "high and low gear")))
+In these cases, we prefer
 to write tests against services because of the lower coupling and higher coverage.
 
 For example, when writing an `add_stock` function or a `cancel_order` feature,
 we can work more quickly and with less coupling by writing tests against the
 service layer.((("service layer", "writing tests against")))
 
-When starting a new project((("domain model", "writing tests against"))) or when hitting a particularly gnarly problem,
+When starting a new project((("domain model", "writing tests against")))
+or when hitting a particularly gnarly problem,
 we will drop back down to writing tests against the domain model so we
 get better feedback and executable documentation of our intent.
 
@@ -275,8 +283,10 @@ model works, we'll have to change a bunch of tests.
 ==== Mitigation: Keep All Domain Dependencies in Fixture Functions
 
 We could at least abstract that out to a helper function or a fixture
-in our tests.((("dependencies", "keeping all domain dependencies in fixture functions")))((("test-driven development (TDD)", "fully decoupling service layer from the domain", "keeping all domain dependencies in fixture functions")))((("fixture functions, keeping all domain dependencies in")))  Here's one way you could do that, adding a factory
-function((("faking", "FakeRepository", "adding fixture function on"))) on `FakeRepository`:
+in our tests.((("dependencies", "keeping all domain dependencies in fixture functions")))((("test-driven development (TDD)", "fully decoupling service layer from the domain", "keeping all domain dependencies in fixture functions")))((("fixture functions, keeping all domain dependencies in")))
+Here's one way you could do that, adding a factory
+function((("faking", "FakeRepository", "adding fixture function on")))
+on `FakeRepository`:
 
 
 [[services_factory_function]]
@@ -363,7 +373,8 @@ NOTE: Should you write a new service just because it would help remove
 
 That now allows us to rewrite _all_ of our service-layer tests purely
 in terms of the services themselves, using only primitives, and without
-any dependencies((("services", "service layer tests only using services"))) on the model:
+any dependencies((("services", "service layer tests only using services")))
+on the model:
 
 
 [[services_tests_all_services]]
@@ -396,7 +407,8 @@ we see fit.((("test-driven development (TDD)", "fully decoupling service layer f
 === Carrying the Improvement Through to the E2E Tests
 
 In the same way that adding `add_batch` helped decouple our service-layer
-tests from the model, adding an API endpoint to((("APIs", "adding API for adding a batch")))((("test-driven development (TDD)", "fully decoupling service layer from the domain", "carrying improvement through to E2E tests")))((("end-to-end tests", "decoupling of service layer from domain, carrying through to")))((("E2E tests", see="end-to-end tests"))) add a batch would remove
+tests from the model, adding an API endpoint to((("APIs", "adding API for adding a batch")))((("test-driven development (TDD)", "fully decoupling service layer from the domain", "carrying improvement through to E2E tests")))((("end-to-end tests", "decoupling of service layer from domain, carrying through to")))((("E2E tests", see="end-to-end tests")))
+add a batch would remove
 the need for the ugly `add_stock` fixture, and our E2E tests could be free
 of those hardcoded SQL queries and the direct dependency on the database.
 
@@ -478,13 +490,15 @@ of your test coverage to unit tests and develop a healthy test pyramid.((("test-
 ******************************************************************************
 
 Aim for one end-to-end test per feature::
-    This might be written against an HTTP API, for example.((("end-to-end tests", "aiming for one test per feature")))  The objective
+    This might be written against an HTTP API, for example.((("end-to-end tests", "aiming for one test per feature")))
+The objective
     is to demonstrate that the feature works, and that all the moving parts
     are glued together correctly.
 
 Write the bulk of your tests against the service layer::
     These edge-to-edge tests offer a good trade-off between coverage,
-    runtime, and efficiency.((("service layer", "writing bulk of tests against"))) Each test tends to cover one code path of a
+    runtime, and efficiency.((("service layer", "writing bulk of tests against")))
+Each test tends to cover one code path of a
     feature and use fakes for I/O. This is the place to exhaustively
     cover all the edge cases and the ins and outs of your business logic.footnote:[
 A valid concern about writing tests at a higher level is that it can lead to
@@ -514,6 +528,7 @@ things will help along the way:
 
 * In an ideal world, you'll have all the services you need to be able to test
   entirely against the service layer, rather than hacking state via
-  repositories or the database.((("test-driven development (TDD)", "types of tests, rules of thumb for"))) This pays off in your end-to-end tests as well.
+  repositories or the database.((("test-driven development (TDD)", "types of tests, rules of thumb for")))
+This pays off in your end-to-end tests as well.
 
 Onto the next chapter!

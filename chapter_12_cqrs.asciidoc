@@ -3,7 +3,8 @@
 
 In this chapter, we're going to start with a fairly uncontroversial insight:
 reads (queries) and writes (commands) are different, so they
-should be treated differently (or have their responsibilities segregated, if you will).((("queries", seealso="command-query responsibility segregation")))((("command-query responsibility segregation (CQRS)", id="ix_CQRS"))) Then we're going to push that insight as far
+should be treated differently (or have their responsibilities segregated, if you will).((("queries", seealso="command-query responsibility segregation")))((("command-query responsibility segregation (CQRS)", id="ix_CQRS")))
+Then we're going to push that insight as far
 as we can. 
 
 If you're anything like Harry, this will all seem extreme at first,
@@ -34,7 +35,8 @@ image::images/apwp_1201.png[]
 === Domain Models Are for Writing
 
 We've spent a lot of time in this book talking about how to build software that
-enforces the rules of our domain.((("command-query responsibility segregation (CQRS)", "domain models for writing")))((("domain model", "writing data"))) These rules, or constraints, will be different
+enforces the rules of our domain.((("command-query responsibility segregation (CQRS)", "domain models for writing")))((("domain model", "writing data")))
+These rules, or constraints, will be different
 for every application, and they make up the interesting core of our systems.
 
 In this book, we've set explicit constraints like "You can't allocate more stock
@@ -93,7 +95,8 @@ The _domain_ is the same--we're concerned with batches of stock, and their
 arrival date, and the amount that's still available--but the access pattern
 is very different. For example, our customers won't notice if the query
 is a few seconds out of date, but if our allocate service is inconsistent,
-we'll make a mess of their orders.((("consistency", "eventually consistent reads")))((("eventually consistent reads"))) We can take advantage of this difference by
+we'll make a mess of their orders.((("consistency", "eventually consistent reads")))((("eventually consistent reads")))
+We can take advantage of this difference by
 making our reads _eventually consistent_ in order to make them perform better.
 
 [role="nobreakinside less_space"]
@@ -142,7 +145,8 @@ read side, because stale data is essentially unavoidable.
 *******************************************************************************
 
 We can think of these requirements as forming two halves of a system:
-the read side and the((("command-query responsibility segregation (CQRS)", "read side and write side"))) write side, shown in <<read_and_write_table>>.
+the read side and the((("command-query responsibility segregation (CQRS)", "read side and write side")))
+write side, shown in <<read_and_write_table>>.
 
 For the write side, our fancy domain architectural patterns help us to evolve
 our system over time, but the complexity we've built so far doesn't buy
@@ -238,7 +242,8 @@ def test_unhappy_path_returns_400_and_error_message():
 ----
 ====
 
-OK, what might((("Flask framework", "endpoint for viewing allocations"))) the Flask app look like?((("views", "read-only")))
+OK, what might((("Flask framework", "endpoint for viewing allocations")))
+the Flask app look like?((("views", "read-only")))
 
 
 [[flask_app_calls_view]]
@@ -389,7 +394,8 @@ code with more complex business logic.
 
 === "Obvious" Alternative 1: Using the Existing Repository
 
-How about adding((("views", "simple view that uses the repository")))((("repositories", "simple view using existing repository")))((("command-query responsibility segregation (CQRS)", "simple view using existing repository"))) a helper method to our `products` repository?
+How about adding((("views", "simple view that uses the repository")))((("repositories", "simple view using existing repository")))((("command-query responsibility segregation (CQRS)", "simple view using existing repository")))
+a helper method to our `products` repository?
 
 
 [[view_using_repo]]
@@ -478,7 +484,8 @@ more awkward to use for read operations.
 ===  "Obvious" Alternative 2: Using the ORM
 
 You may be thinking, OK, if our repository is clunky, and working with
-`Products` is clunky, then I can at least ((("object-relational mappers (ORMs)", "simple view using the ORM")))((("views", "simple view that uses the ORM")))((("command-query responsibility segregation (CQRS)", "view that uses the ORM"))) use my ORM and work with `Batches`.
+`Products` is clunky, then I can at least ((("object-relational mappers (ORMs)", "simple view using the ORM")))((("views", "simple view that uses the ORM")))((("command-query responsibility segregation (CQRS)", "view that uses the ORM")))
+use my ORM and work with `Batches`.
 That's what it's for!
 
 [[view_using_orm]]
@@ -529,7 +536,8 @@ of the objects it needs, and then issue individual queries for each object to
 retrieve their attributes. ((("command-query responsibility segregation (CQRS)", "SELECT N+1 and other performance problems")))((("SELECT N+1")))((("object-relational mappers (ORMs)", "SELECT N+1 performance problem")))This is especially likely if there are any foreign-key relationships on your objects.
 
 NOTE: In all fairness, we should say that SQLAlchemy is quite good at avoiding
-    the `SELECT N+1` problem.((("SQLAlchemy", "SELECT N+1 problem and")))((("eager loading"))) It doesn't display it in the preceding example, and
+    the `SELECT N+1` problem.((("SQLAlchemy", "SELECT N+1 problem and")))((("eager loading")))
+It doesn't display it in the preceding example, and
     you can request
     https://oreil.ly/XKDDm[eager loading]
     explicitly to avoid it when dealing with joined objects.
@@ -545,7 +553,8 @@ build read replicas, or even add caching layers.
 === Time to Completely Jump the Shark
 
 On that note: have we convinced you that our raw SQL version isn't so weird as
-it first seemed?((("command-query responsibility segregation (CQRS)", "denormalized copy of your data optimized for read operations")))((("views", "keeping totally separate, denormalized datastore for view model"))) Perhaps we were exaggerating for effect? Just you wait.
+it first seemed?((("command-query responsibility segregation (CQRS)", "denormalized copy of your data optimized for read operations")))((("views", "keeping totally separate, denormalized datastore for view model")))
+Perhaps we were exaggerating for effect? Just you wait.
 
 So, reasonable or not, that hardcoded SQL query is pretty ugly, right? What if
 we made it nicer...
@@ -589,7 +598,8 @@ isn't uncommon, once you've reached the limits of what you can do with indexes.
 Even with well-tuned indexes, a relational database uses a lot of CPU to perform
 joins. The fastest queries will always be pass:[<code>SELECT * from <em>mytable</em> WHERE <em>key</em> = :<em>value</em></code>].
 
-More than raw speed, though, this approach buys us scale.((("SELECT * FROM WHERE queries"))) When we're writing
+More than raw speed, though, this approach buys us scale.((("SELECT * FROM WHERE queries")))
+When we're writing
 data to a relational database, we need to make sure that we get a lock over the
 rows we're changing so we don't run into consistency problems.
 
@@ -817,7 +827,8 @@ implementation: setup puts messages on the message bus, and the assertions
 are against our view.
 
 TIP: Event handlers are a great way to manage updates to a read model,
-    if you decide you need one.((("event handlers", "managing updates to read model")))  They also make it easy to change the
+    if you decide you need one.((("event handlers", "managing updates to read model")))
+They also make it easy to change the
     implementation of that read model at a later date.
 
 .Exercise for the Reader
@@ -833,9 +844,11 @@ to Redis), and see which you prefer.
 
 === Wrap-Up
 
-<<view_model_tradeoffs>> proposes some((("command-query responsibility segregation (CQRS)", "trade-offs for view model options")))((("views", "trade-offs for view model options"))) pros and cons for each of our options.
+<<view_model_tradeoffs>> proposes some((("command-query responsibility segregation (CQRS)", "trade-offs for view model options")))((("views", "trade-offs for view model options")))
+pros and cons for each of our options.
 
-As it happens, the((("command-query responsibility segregation (CQRS)", "full-blown CQRS versus simpler options"))) allocation service at MADE.com does use "full-blown" CQRS,
+As it happens, the((("command-query responsibility segregation (CQRS)", "full-blown CQRS versus simpler options")))
+allocation service at MADE.com does use "full-blown" CQRS,
 with a read model stored in Redis, and even a second layer of cache provided
 by Varnish. But its use cases are quite a bit different from what
 we've shown here. For the kind of allocation service we're building, it seems
