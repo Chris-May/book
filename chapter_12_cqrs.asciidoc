@@ -82,7 +82,8 @@ What about reads, though?
 
 === Most Users Aren't Going to Buy Your Furniture
 
-At MADE.com, we have a ((("command-query responsibility segregation (CQRS)", "reads")))system very like the allocation service. In a busy day, we
+At MADE.com, we have a ((("command-query responsibility segregation (CQRS)", "reads")))
+system very like the allocation service. In a busy day, we
 might process one hundred orders in an hour, and we have a big gnarly system for
 allocating stock to those orders.
 
@@ -167,7 +168,8 @@ domain model are just bloat.
 === Post/Redirect/Get and CQS
 
 If you do web development, you're probably familiar with the
-Post/Redirect/Get pattern. ((("Post/Redirect/Get pattern")))((("command-query responsibility segregation (CQRS)", "Post/Redirect/Get pattern and CQS")))In this technique, a web endpoint accepts an
+Post/Redirect/Get pattern. ((("Post/Redirect/Get pattern")))((("command-query responsibility segregation (CQRS)", "Post/Redirect/Get pattern and CQS")))
+In this technique, a web endpoint accepts an
 HTTP POST and responds with a redirect to see the result. For example, we might
 accept a POST to _/batches_ to create a new batch and redirect the user to
 _/batches/123_ to see their newly created batch.
@@ -182,7 +184,8 @@ Both these problems happen because we're returning data in response to a write
 operation. Post/Redirect/Get sidesteps the issue by separating the read and
 write phases of our operation.((("Post/Redirect/Get pattern", "command-query separation (CQS)")))
 
-This technique is a simple ((("CQS (command-query separation)")))example of command-query separation (CQS). In CQS we
+This technique is a simple ((("CQS (command-query separation)")))
+example of command-query separation (CQS). In CQS we
 follow one simple rule: functions should either modify state or answer
 questions, but never both. This makes software easier to reason about: we should
 always be able to ask, "Are the lights on?" without flicking the light switch.
@@ -271,7 +274,8 @@ def allocations_view_endpoint(orderid):
 [[hold-on-ch12]]
 === Hold On to Your Lunch, Folks
 
-Hmm, so we can probably just ((("command-query responsibility segregation (CQRS)", "building read-only views into our data")))((("repositories", "adding list method to existing repository object")))((("SQL", "raw SQL in views")))add a list method to our existing repository
+Hmm, so we can probably just ((("command-query responsibility segregation (CQRS)", "building read-only views into our data")))((("repositories", "adding list method to existing repository object")))((("SQL", "raw SQL in views")))
+add a list method to our existing repository
 object:
 
 
@@ -323,7 +327,8 @@ TIP: Splitting out your read-only views from your state-modifying
 
 === Testing CQRS Views
 
-Before we get ((("views", "testing CQRS views")))((("testing", "integration test for CQRS view")))((("command-query responsibility segregation (CQRS)", "testing views")))into exploring various options, let's talk about testing.
+Before we get ((("views", "testing CQRS views")))((("testing", "integration test for CQRS view")))((("command-query responsibility segregation (CQRS)", "testing views")))
+into exploring various options, let's talk about testing.
 Whichever approaches you decide to go for, you're probably going to need
 at least one integration test.  Something like this:
 
@@ -533,7 +538,8 @@ https://oreil.ly/OkBOS[`SELECT N+1`]
 problem is a common performance problem with ORMs: when retrieving a list of
 objects, your ORM will often perform an initial query to, say, get all the IDs
 of the objects it needs, and then issue individual queries for each object to
-retrieve their attributes. ((("command-query responsibility segregation (CQRS)", "SELECT N+1 and other performance problems")))((("SELECT N+1")))((("object-relational mappers (ORMs)", "SELECT N+1 performance problem")))This is especially likely if there are any foreign-key relationships on your objects.
+retrieve their attributes. ((("command-query responsibility segregation (CQRS)", "SELECT N+1 and other performance problems")))((("SELECT N+1")))((("object-relational mappers (ORMs)", "SELECT N+1 performance problem")))
+This is especially likely if there are any foreign-key relationships on your objects.
 
 NOTE: In all fairness, we should say that SQLAlchemy is quite good at avoiding
     the `SELECT N+1` problem.((("SQLAlchemy", "SELECT N+1 problem and")))((("eager loading")))
@@ -762,7 +768,8 @@ data.
 === Changing Our Read Model Implementation Is Easy
 
 Let's see the flexibility that our event-driven model buys us in action,
-by seeing what happens if we ever decide ((("Redis, changing read model implementation to use")))((("command-query responsibility segregation (CQRS)", "changing read model implementation to use Redis")))we want to implement a read model by
+by seeing what happens if we ever decide ((("Redis, changing read model implementation to use")))((("command-query responsibility segregation (CQRS)", "changing read model implementation to use Redis")))
+we want to implement a read model by
 using a totally separate storage engine, Redis.
 
 Just watch:

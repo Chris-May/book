@@ -135,7 +135,8 @@ If you want to see how we did it, check out
 
 === The Straightforward Implementation
 
-Implementing things in the most obvious way, you ((("service layer", "first cut of Flask app", id="ix_serlay1Flapp")))((("Flask framework", "Flask API and service layer", "first cut of the app", id="ix_Flskapp1st")))might get something like this:
+Implementing things in the most obvious way, you ((("service layer", "first cut of Flask app", id="ix_serlay1Flapp")))((("Flask framework", "Flask API and service layer", "first cut of the app", id="ix_Flskapp1st")))
+might get something like this:
 
 
 [[first_cut_flask_app]]
@@ -223,7 +224,8 @@ Not quite so lovely, but that will force us to add the commit.((("service layer"
 
 === Error Conditions That Require Database Checks
 
-If we keep going like this, though, things ((("Flask framework", "Flask API and service layer", "error conditions requiring database checks")))((("service layer", "error conditions requiring database checks in Flask app")))are going to get uglier and uglier.
+If we keep going like this, though, things ((("Flask framework", "Flask API and service layer", "error conditions requiring database checks")))((("service layer", "error conditions requiring database checks in Flask app")))
+are going to get uglier and uglier.
 
 Suppose we want to add a bit of error handling. What if the domain raises an
 error, for a SKU that's out of stock?  Or what about a SKU that doesn't even
@@ -314,7 +316,8 @@ inverted test pyramid (or "ice-cream cone model," as Bob likes to call it).
 If we look at what our Flask app is doing, there's quite a lot of what we
 might call __orchestration__—fetching stuff out of our repository, validating
 our input against database state, handling errors, and committing in the
-happy path. ((("Flask framework", "Flask API and service layer", "introducing service layer and fake repo to unit test it", id="ix_Flskappserly")))((("orchestration")))((("service layer", "introducing and using FakeRepository to unit test it", id="ix_serlayintr")))Most of these things don't have anything to do with having a
+happy path. ((("Flask framework", "Flask API and service layer", "introducing service layer and fake repo to unit test it", id="ix_Flskappserly")))((("orchestration")))((("service layer", "introducing and using FakeRepository to unit test it", id="ix_serlayintr")))
+Most of these things don't have anything to do with having a
 web API endpoint (you'd need them if you were building a CLI, for example; see
 <<appendix_csvs>>), and they're not really things that need to be tested by
 end-to-end tests.
@@ -427,7 +430,8 @@ def test_commits():
 
 ==== A Typical Service Function
 
-We'll write a service ((("Flask framework", "Flask API and service layer", "introducing service layer and fake repo to unit test it", startref="ix_Flskappserly")))((("service layer", "typical service function")))((("functions", "service layer")))((("Flask framework", "Flask API and service layer", "typical service layer function")))function that looks something like this:
+We'll write a service ((("Flask framework", "Flask API and service layer", "introducing service layer and fake repo to unit test it", startref="ix_Flskappserly")))((("service layer", "typical service function")))((("functions", "service layer")))((("Flask framework", "Flask API and service layer", "typical service layer function")))
+function that looks something like this:
 
 [[service_function]]
 .Basic allocation service (services.py)
@@ -499,7 +503,8 @@ abstractions intact.
 
 
 But the essentials of the service layer are there, and our Flask
-app now looks ((("Flask framework", "Flask API and service layer", "app delegating to service layer")))((("service layer", "Flask app delegating to")))a lot cleaner:
+app now looks ((("Flask framework", "Flask API and service layer", "app delegating to service layer")))((("service layer", "Flask app delegating to")))
+a lot cleaner:
 
 
 [[flask_app_using_service_layer]]
@@ -611,7 +616,8 @@ ways to talk about this stuff.((("application services")))
 
 We're using two things called a _service_ in this chapter. The first is an
 _application service_ (our service layer). Its job is to handle requests from the
-outside world and to _orchestrate_ an operation. ((("orchestration", "using application service")))What we mean is that the
+outside world and to _orchestrate_ an operation. ((("orchestration", "using application service")))
+What we mean is that the
 service layer _drives_ the application by following a bunch of simple steps:
 
 * Get some data from the database
@@ -734,7 +740,8 @@ has really bought us quite a lot:
 ==== The DIP in Action
 
 <<service_layer_diagram_abstract_dependencies>> shows the
-dependencies of our service ((("Flask framework", "Flask API and service layer", "service layer dependencies")))((("service layer", "dependencies of")))((("dependencies", "abstract dependencies of service layer")))layer: the domain model
+dependencies of our service ((("Flask framework", "Flask API and service layer", "service layer dependencies")))((("service layer", "dependencies of")))((("dependencies", "abstract dependencies of service layer")))
+layer: the domain model
 and `AbstractRepository` (the port, in ports and adapters terminology).
 
 When we run the tests, <<service_layer_diagram_test_dependencies>> shows

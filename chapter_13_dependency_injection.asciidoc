@@ -9,7 +9,8 @@ In this chapter, we'll explore some of the pain points in our code
 that lead us to consider using DI, and we'll present some options
 for how to do it, leaving it to you to pick which you think is most Pythonic.
 
-We'll also add a new ((("bootstrapping")))component to our architecture called __bootstrap.py__;
+We'll also add a new ((("bootstrapping")))
+component to our architecture called __bootstrap.py__;
 it will be in charge of dependency injection, as well as some other initialization
 stuff that we often need.  We'll explain why this sort of thing is called
 a _composition root_ in OO languages, and why _bootstrap script_ is just fine
@@ -162,7 +163,8 @@ def send_out_of_stock_notification(
 
 
 Why pollute our application code with unnecessary arguments just for the
-sake of our ((("mock.patch method")))tests? `mock.patch` makes monkeypatching nice and easy:
+sake of our ((("mock.patch method")))
+tests? `mock.patch` makes monkeypatching nice and easy:
 
 
 [[mocking_is_easy]]
@@ -469,7 +471,8 @@ def bootstrap(
 
 // IDEA: show option of bootstrapper as class instead?
 
-Here's how we ((("dependency injection", "by inspecting function signatures")))inject dependencies into a handler function by inspecting
+Here's how we ((("dependency injection", "by inspecting function signatures")))
+inject dependencies into a handler function by inspecting
 it:
 
 [[di_by_inspection]]
@@ -547,7 +550,8 @@ injection in only one place, the handler functions, so this super-manual solutio
 and Harry's `inspect()`-based one will both work fine.
 
 If you find yourself wanting to do DI in more things and at different times,
-or if ((("dependency chains")))((("dependency injection", "using DI framework")))you ever get into _dependency chains_ (in which your dependencies have their
+or if ((("dependency chains")))((("dependency injection", "using DI framework")))
+you ever get into _dependency chains_ (in which your dependencies have their
 own dependencies, and so on), you may get some mileage out of a "real" DI
 framework.
 
@@ -608,7 +612,8 @@ class MessageBus:  #<1>
     in the Flask app context as we've written it. Just something to watch out for.
 
 
-What else changes ((("handlers", "event and command handlers in message bus")))((("message bus", "event and command handler logic staying the same")))((("commands", "command handler logic in message bus")))((("event handlers", "in message bus")))in the bus?
+What else changes ((("handlers", "event and command handlers in message bus")))((("message bus", "event and command handler logic staying the same")))((("commands", "command handler logic in message bus")))((("event handlers", "in message bus")))
+in the bus?
 
 [[messagebus_handlers_change]]
 .Event and command handler logic stays the same (src/allocation/service_layer/messagebus.py)
@@ -734,7 +739,8 @@ def test_allocations_view(sqlite_bus):
 <3> But we don't need to send email or publish, so we make those noops.
 
 
-In our unit tests, in ((("testing", "unit test for bootstrap")))contrast, we can reuse our `FakeUnitOfWork`:
+In our unit tests, in ((("testing", "unit test for bootstrap")))
+contrast, we can reuse our `FakeUnitOfWork`:
 
 [[bootstrap_tests]]
 .Bootstrap in unit test (tests/unit/test_handlers.py)
@@ -1011,7 +1017,8 @@ And that's it really.
 .Exercise for the Reader 2
 ******************************************************************************
 
-You could do two things ((("adapters", "exercise for the reader")))for practice regarding adapters:
+You could do two things ((("adapters", "exercise for the reader")))
+for practice regarding adapters:
 
 1. Try swapping out our notifications from email to SMS
     notifications using Twilio, for example, or Slack notifications.  Can you find

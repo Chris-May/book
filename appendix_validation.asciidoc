@@ -2,7 +2,8 @@
 [appendix]
 == Validation
 
-Whenever we're ((("validation", id="ix_valid")))teaching and talking about these techniques, one question that
+Whenever we're ((("validation", id="ix_valid")))
+teaching and talking about these techniques, one question that
 comes up over and over is "Where should I do validation? Does that belong with
 my business logic in the domain model, or is that an infrastructural concern?"
 

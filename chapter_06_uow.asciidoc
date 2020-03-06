@@ -2,7 +2,8 @@
 == Unit of Work Pattern
 
 In this chapter we'll introduce the final piece of the puzzle that ties
-together ((("Unit of Work pattern", id="ix_UoW")))the Repository and Service Layer patterns: the _Unit of Work_ pattern.
+together ((("Unit of Work pattern", id="ix_UoW")))
+the Repository and Service Layer patterns: the _Unit of Work_ pattern.
 
 If the Repository pattern is our abstraction over the idea of persistent storage,
 the Unit of Work (UoW) pattern is our abstraction over the idea of _atomic operations_.((("atomic operations")))
@@ -104,7 +105,8 @@ This gives us three useful things:
 
 === Test-Driving a UoW with Integration Tests
 
-Here are our ((("integration tests", "test-driving Unit of Work with")))((("testing", "Unit of Work with integration tests")))((("Unit of Work pattern", "test driving with integration tests")))integration tests for the UOW:
+Here are our ((("integration tests", "test-driving Unit of Work with")))((("testing", "Unit of Work with integration tests")))((("Unit of Work pattern", "test driving with integration tests")))
+integration tests for the UOW:
 
 
 [[test_unit_of_work]]
@@ -171,7 +173,8 @@ def get_allocated_batch_ref(session, orderid, sku):
 
 === Unit of Work and Its Context Manager
 
-In our tests we've implicitly defined an interface for what a UoW needs to do. Let's make that explicit by using an ((("abstractions", "AbstractUnitOfWork")))((("Unit of Work pattern", "and its context manager")))((("context manager", "Unit of Work and", id="ix_ctxtmgr")))abstract
+In our tests we've implicitly defined an interface for what a UoW needs to do. Let's make that explicit by using an ((("abstractions", "AbstractUnitOfWork")))((("Unit of Work pattern", "and its context manager")))((("context manager", "Unit of Work and", id="ix_ctxtmgr")))
+abstract
 base class:
 
 
@@ -218,7 +221,8 @@ commit, or if we exit the context manager by raising an error,
 ==== The Real Unit of Work Uses SQLAlchemy Sessions
 
 The main thing that our concrete implementation adds is the
-database ((("Unit of Work pattern", "and its context manager", "real UoW using SQLAlchemy session")))((("SQLAlchemy", "database session for Unit of Work")))((("databases", "SQLAlchemy adding session for Unit of Work")))session:
+database ((("Unit of Work pattern", "and its context manager", "real UoW using SQLAlchemy session")))((("SQLAlchemy", "database session for Unit of Work")))((("databases", "SQLAlchemy adding session for Unit of Work")))
+session:
 
 [[unit_of_work]]
 .The real SQLAlchemy UoW (src/allocation/service_layer/unit_of_work.py)
@@ -358,7 +362,8 @@ about our designs.((("context manager", "Unit of Work and", startref="ix_ctxtmgr
 
 === Using the UoW in the Service Layer
 
-Here's what our new service ((("service layer", "using Unit of Work in")))((("Unit of Work pattern", "using UoW in service layer")))layer looks like:
+Here's what our new service ((("service layer", "using Unit of Work in")))((("Unit of Work pattern", "using UoW in service layer")))
+layer looks like:
 
 
 [[service_layer_with_uow]]
@@ -397,7 +402,8 @@ def allocate(
 === Explicit Tests for Commit/Rollback Behavior
 
 To convince ourselves that the commit/rollback behavior works, we wrote
-a couple ((("commits", "explicit tests for")))((("rollbacks", "explicit tests for")))((("Unit of Work pattern", "explicit tests for commit/rollback behavior")))((("testing", "integration tests for rollback behavior")))of tests:
+a couple ((("commits", "explicit tests for")))((("rollbacks", "explicit tests for")))((("Unit of Work pattern", "explicit tests for commit/rollback behavior")))((("testing", "integration tests for rollback behavior")))
+of tests:
 
 [[testing_rollback]]
 .Integration tests for rollback behavior (tests/integration/test_uow.py)
@@ -507,7 +513,8 @@ together.
 
 ==== Example 1: Reallocate
 
-Suppose we want to be able to deallocate and ((("reallocate service function")))((("Unit of Work pattern", "using UoW to group multiple operations into atomic unit", "reallocate function example")))then reallocate orders:
+Suppose we want to be able to deallocate and ((("reallocate service function")))((("Unit of Work pattern", "using UoW to group multiple operations into atomic unit", "reallocate function example")))
+then reallocate orders:
 
 [[reallocate]]
 .Reallocate service function
@@ -629,7 +636,8 @@ Every time you load a new entity from the database, the session begins to _track
 changes to the entity, and when the session is _flushed_, all your changes are
 persisted together. Why do we go to the effort of abstracting away the SQLAlchemy session if it already implements the pattern we want?
 
-<<chapter_06_uow_tradeoffs>> discusses ((("Unit of Work pattern", "pros and cons or trade-offs")))some of the trade-offs.
+<<chapter_06_uow_tradeoffs>> discusses ((("Unit of Work pattern", "pros and cons or trade-offs")))
+some of the trade-offs.
 
 [[chapter_06_uow_tradeoffs]]
 [options="header"]
@@ -673,7 +681,8 @@ SQLAlchemy `Session`.
 .Unit of Work Pattern Recap
 *****************************************************************
 The Unit of Work pattern is an abstraction around data integrity::
-    It helps to enforce ((("Unit of Work pattern", "recap of important points")))the consistency of our domain model, and improves
+    It helps to enforce ((("Unit of Work pattern", "recap of important points")))
+the consistency of our domain model, and improves
     performance, by letting us perform a single _flush_ operation at the
     end of an operation.
 

@@ -163,7 +163,8 @@ help minimize boilerplate for this sort of thing.]
 
 ==== Custom Methods on Django ORM Classes to Translate to/from Our Domain Model
 
-Those custom methods ((("object-relational mappers (ORMs)", "Django, custom methods to translate to/from domain model")))((("domain model", "Django custom ORM methods for conversion")))look something like this:
+Those custom methods ((("object-relational mappers (ORMs)", "Django, custom methods to translate to/from domain model")))((("domain model", "Django custom ORM methods for conversion")))
+look something like this:
 
 [[django_models]]
 .Django ORM with custom methods for domain model conversion (src/djangoproject/alloc/models.py)
@@ -328,7 +329,8 @@ class DjangoUnitOfWork(AbstractUnitOfWork):
 
 === API: Django Views Are Adapters
 
-The Django _views.py_ file ends ((("views", "Django views as adapters")))((("adapters", "Django views")))((("Django", "views are adapters")))((("APIs", "Django views as adapters")))up being almost identical to the
+The Django _views.py_ file ends ((("views", "Django views as adapters")))((("adapters", "Django views")))((("Django", "views are adapters")))((("APIs", "Django views as adapters")))
+up being almost identical to the
 old _flask_app.py_, because our architecture means it's a very
 thin wrapper around our service layer (which didn't change at all, by the way):
 
@@ -458,5 +460,6 @@ NOTE: We'd like to give a shout-out to David Seddon and Ashia Zawaduk for
     stop us from saying anything really stupid about a topic we don't really
     have enough personal experience of, but they may have failed.
 
-For more ((("Django", startref="ix_Django")))thoughts and actual lived experience dealing with existing
+For more ((("Django", startref="ix_Django")))
+thoughts and actual lived experience dealing with existing
 applications, refer to the <<epilogue_1_how_to_get_there_from_here, epilogue>>.

@@ -71,7 +71,8 @@ while an _invariant_
 is defined a little more precisely as a condition that is always true.
 
 If we were writing a hotel-booking system, we might have the constraint that double
-bookings are not allowed. ((("constraints")))This supports the invariant that a room cannot have more
+bookings are not allowed. ((("constraints")))
+This supports the invariant that a room cannot have more
 than one booking for the same night.
 
 Of course, sometimes we might need to temporarily _bend_ the rules.((("consistency")))
@@ -215,7 +216,8 @@ small number of objects—the smaller, the better, for performance—that have t
 be consistent with one another, and we need to give this boundary a good name.
 
 The object we're manipulating under the covers is `Batch`. What do we call a
-collection of batches? ((("batches", "collection of")))How should we divide all the batches in the system into
+collection of batches? ((("batches", "collection of")))
+How should we divide all the batches in the system into
 discrete islands of consistency?
 
 We _could_ use `Shipment` as our boundary. Each shipment contains several
@@ -339,7 +341,8 @@ Product o- Batch: has
 @enduml
 ----
 
-Let's see how that looks ((("Product object", "code for")))in code form:
+Let's see how that looks ((("Product object", "code for")))
+in code form:
 
 [role="pagebreak-before"]
 [[product_aggregate]]
@@ -400,7 +403,8 @@ contributions from Evans and the DDD community
 is the concept of
 https://martinfowler.com/bliki/BoundedContext.html[_bounded contexts_].
 
-In essence, this ((("domain driven design (DDD)", "bounded contexts")))was a reaction against attempts to capture entire businesses
+In essence, this ((("domain driven design (DDD)", "bounded contexts")))
+was a reaction against attempts to capture entire businesses
 into a single model. The word _customer_ means different things to people
 in sales, customer service, logistics, support, and so on. Attributes
 needed in one context are irrelevant in another; more perniciously, concepts
@@ -603,7 +607,8 @@ rules such that only one of them is allowed to `commit` the new `Product`
 with `version=4`, and the other update is rejected.((("transactions", "concurrent, attempting update on Product")))
 
 TIP: Version numbers are just one way to implement optimistic locking. You
-    could achieve the same thing ((("PostgreSQL", "SERIALIZABLE transaction isolation level")))by setting the Postgres transaction isolation
+    could achieve the same thing ((("PostgreSQL", "SERIALIZABLE transaction isolation level")))
+by setting the Postgres transaction isolation
     level to `SERIALIZABLE`, but that often comes at a severe performance cost.
     Version numbers also make implicit concepts explicit.
 
@@ -652,7 +657,8 @@ notice if there is a pass:[<span class="keep-together">problem</span>].
 _Pessimistic_ concurrency control((("pessimistic concurrency")))
 works under the assumption that two users
 are going to cause conflicts, and we want to prevent conflicts in all cases, so
-we lock everything just to be safe. ((("SELECT FOR UPDATE statement")))In our example, that would mean locking
+we lock everything just to be safe. ((("SELECT FOR UPDATE statement")))
+In our example, that would mean locking
 the whole `batches` table, or using ++SELECT FOR UPDATE++—we're pretending
 that we've ruled those out for performance reasons, but in real life you'd
 want to do some evaluations and measurements of your own.((("locks on database tables", "pessimistic locking")))
@@ -749,7 +755,8 @@ we can get the behavior we want: if we have two
 concurrent attempts to do allocation against the same `Product`, one of them
 should fail, because they can't both update the version number.
 
-First, let's ((("transactions", "simulating a slow transaction")))((("time.sleep function")))simulate a "slow" transaction using a function that does
+First, let's ((("transactions", "simulating a slow transaction")))((("time.sleep function")))
+simulate a "slow" transaction using a function that does
 allocation and then does an explicit sleep:footnote:[`time.sleep()` works well
 in our use case, but it's not the most reliable or efficient way to reproduce
 concurrency bugs.((("concurrency", "reproducing behavior with time.sleep function")))((("time.sleep function", "reproducing concurrency behavior with")))
@@ -836,7 +843,8 @@ def test_concurrent_updates_to_version_are_not_allowed(postgres_session_factory)
 
 ==== Enforcing Concurrency Rules by Using Database Transaction pass:[<span class="keep-together">Isolation Levels</span>]
 
-To get the test to pass ((("concurrency", "enforcing rules using database transactions")))((("transactions", "using to enforce concurrency rules")))as it is, we can set the transaction isolation level
+To get the test to pass ((("concurrency", "enforcing rules using database transactions")))((("transactions", "using to enforce concurrency rules")))
+as it is, we can set the transaction isolation level
 on our session:
 
 [[isolation_repeatable_read]]
@@ -851,7 +859,8 @@ DEFAULT_SESSION_FACTORY = sessionmaker(bind=create_engine(
 ----
 ====
 
-TIP: Transaction ((("isolation levels (transaction)")))((("PostgreSQL", "documentation for transaction isolation levels")))isolation levels are tricky stuff, so it's worth spending time
+TIP: Transaction ((("isolation levels (transaction)")))((("PostgreSQL", "documentation for transaction isolation levels")))
+isolation levels are tricky stuff, so it's worth spending time
 understanding https://oreil.ly/5vxJA[the Postgres documentation].footnote:[If you're not using Postgres, you'll need to read different documentation. Annoyingly, different databases all have quite different definitions. Oracle's `SERIALIZABLE` is equivalent to Postgres's `REPEATABLE READ`, for pass:[<span class="keep-together">example</span>].]
 
 ==== Pessimistic Concurrency Control Example: SELECT FOR UPDATE
@@ -900,7 +909,8 @@ to
 read1, write1, read2, write2(succeed)
 ----
 
-Some people refer to ((("read-modify-write failure mode")))this as the "read-modify-write" failure mode.((("PostgreSQL", "Anti-Patterns: Read-Modify-Write Cycles")))
+Some people refer to ((("read-modify-write failure mode")))
+this as the "read-modify-write" failure mode.((("PostgreSQL", "Anti-Patterns: Read-Modify-Write Cycles")))
 Read https://oreil.ly/uXeZI["PostgreSQL Anti-Patterns: Read-Modify-Write Cycles"] for a good pass:[<span class="keep-together">overview</span>].
 
 //TODO maybe better diagrams here?

@@ -95,7 +95,8 @@ _What? Oh, "gubbins" is a British word for "stuff." You can just ignore that. It
 
 === Applying the DIP to Data Access
 
-As mentioned in the <<introduction, introduction>>, a layered architecture is ((("data access, applying dependency inversion principle to")))((("layered architecture")))a common
+As mentioned in the <<introduction, introduction>>, a layered architecture is ((("data access, applying dependency inversion principle to")))((("layered architecture")))
+a common
  approach to structuring a system that has a UI, some logic, and a database (see
 <<layered_architecture2>>).
 
@@ -117,7 +118,8 @@ fine; depending on an ORM or a web framework is not.]
 We don't want infrastructure concerns bleeding over into our domain model and
 slowing our unit tests or our ability to make changes.
 
-Instead, as discussed in the introduction, we'll ((("onion architecture")))think of our model as being on the
+Instead, as discussed in the introduction, we'll ((("onion architecture")))
+think of our model as being on the
 "inside," and dependencies flowing inward to it; this is what people sometimes call
 _onion architecture_ (see <<onion_architecture>>).
 
@@ -169,7 +171,8 @@ and whether there is a Pythonic equivalent of interfaces,
 
 === Reminder: Our Model
 
-Let's remind ((("domain model", id="ix_domod")))ourselves of our domain model (see <<model_diagram_reminder>>):
+Let's remind ((("domain model", id="ix_domod")))
+ourselves of our domain model (see <<model_diagram_reminder>>):
 an allocation is the concept of linking an `OrderLine` to a `Batch`.  We're
 storing the allocations as a collection on our `Batch` object.
 
@@ -193,7 +196,8 @@ the world of databases and relational algebra.
 
 The most important thing an ORM gives us is _persistence ignorance_: the idea
 that our fancy domain model doesn't need to know anything about how data is
-loaded or persisted. ((("persistence ignorance")))This helps keep our domain clean of direct dependencies
+loaded or persisted. ((("persistence ignorance")))
+This helps keep our domain clean of direct dependencies
 on particular database technologies.footnote:[In this sense, using an ORM is
 already an example of the DIP. Instead of depending on hardcoded SQL, we depend
 on an abstraction, the ORM. But that's not enough for us—not in this book!]
@@ -336,7 +340,8 @@ This gives us all the benefits of SQLAlchemy, including the ability to use
 domain classes, as we'll see.
 
 When you're first trying to build your ORM config, it can be useful to write
-tests for it, as in the ((("object-relational mappers (ORMs)", "ORM depends on the data model", "testing the ORM")))following example:
+tests for it, as in the ((("object-relational mappers (ORMs)", "ORM depends on the data model", "testing the ORM")))
+following example:
 
 
 [[orm_tests]]
@@ -370,7 +375,8 @@ def test_orderline_mapper_can_save_lines(session):
 ====
 
 <1> If you haven't used pytest, the `session` argument to this test needs
-    explaining. ((("pytest", "session argument")))You don't need to worry about the details of pytest or its
+    explaining. ((("pytest", "session argument")))
+You don't need to worry about the details of pytest or its
     fixtures for the purposes of this book, but the short explanation is that
     you can define common dependencies for your tests as "fixtures," and
     pytest will inject them to the tests that need them by looking at their
@@ -406,7 +412,8 @@ maintainers, and to Mike Bayer in particular.] As so often happens with
 architectural decisions, you'll need to consider a trade-off. As the
 Zen of Python says, "Practicality beats purity!"
 
-At this ((("SQLAlchemy", "using directly in API endpoint")))point, though, our API endpoint might look something like
+At this ((("SQLAlchemy", "using directly in API endpoint")))
+point, though, our API endpoint might look something like
 the following, and we could get it to work just fine:
 
 [[api_endpoint_with_session]]
@@ -541,7 +548,8 @@ Python's duck typing to enable abstractions. To a Pythonista, a repository is
 _any_ object that has pass:[<code>add(<em>thing</em>)</code>] and pass:[<code>get(<em>id</em>)</code>] methods.
 
 An alternative to look into is https://oreil.ly/q9EPC[PEP
-544 protocols]. ((("PEP 544 protocols")))These give you typing without the possibility of inheritance,
+544 protocols]. ((("PEP 544 protocols")))
+These give you typing without the possibility of inheritance,
 which "prefer composition over inheritance" fans will particularly like.
 
 *******************************************************************************
@@ -578,7 +586,8 @@ simple abstraction over our storage layer, which we control. The Repository patt
 it easy to make fundamental changes to the way we store things (see
 <<appendix_csvs>>), and as we'll see, it is easy to fake out for unit tests.
 
-In addition, the ((("domain driven design (DDD)", "Repository pattern and")))Repository pattern is so common in the DDD world that, if you
+In addition, the ((("domain driven design (DDD)", "Repository pattern and")))
+Repository pattern is so common in the DDD world that, if you
 do collaborate with programmers who have come to Python from the Java and C#
 worlds, they're likely to recognize it. <<repository_pattern_diagram>> illustrates the pattern.
 
@@ -739,7 +748,8 @@ class SqlAlchemyRepository(AbstractRepository):
 ====
 
 
-And now our ((("APIs", "using repository directly in API endpoint")))((("Repository pattern", "using repository directly in API endpoint")))((("Flask framework", "API endpoint")))Flask endpoint might look something like the following:
+And now our ((("APIs", "using repository directly in API endpoint")))((("Repository pattern", "using repository directly in API endpoint")))((("Flask framework", "API endpoint")))
+Flask endpoint might look something like the following:
 
 [[api_endpoint_with_repo]]
 .Using our repository directly in our API endpoint
@@ -777,7 +787,8 @@ But the nice thing is, the rest of your application just doesn't care.
 
 === Building a Fake Repository for Tests Is Now Trivial!
 
-Here's one of the biggest ((("Repository pattern", "building fake repository for tests")))((("set, fake repository as wrapper around")))benefits of the Repository pattern:
+Here's one of the biggest ((("Repository pattern", "building fake repository for tests")))((("set, fake repository as wrapper around")))
+benefits of the Repository pattern:
 
 
 [[fake_repository]]
@@ -920,7 +931,8 @@ TIP: If your app is just a simple CRUD (create-read-update-delete) wrapper
     around a database, then you don't need a domain model or a repository.
 
 But the more complex the domain, the more an investment in freeing
-yourself from ((("&quot;Global Complexity, Local Simplicity&quot; post", primary-sortas="Global")))((("Vens, Rob")))((("domain model", "trade-offs as a diagram")))infrastructure concerns will pay off in terms of the ease of
+yourself from ((("&quot;Global Complexity, Local Simplicity&quot; post", primary-sortas="Global")))((("Vens, Rob")))((("domain model", "trade-offs as a diagram")))
+infrastructure concerns will pay off in terms of the ease of
 making changes.
 
 

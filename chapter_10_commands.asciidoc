@@ -108,7 +108,8 @@ class ChangeBatchQuantity(Command):  #<3>
 === Differences in Exception Handling
 
 
-Just changing ((("events", "commands versus", startref="ix_evntcmd")))the names and verbs is all very well, but that won't
+Just changing ((("events", "commands versus", startref="ix_evntcmd")))
+the names and verbs is all very well, but that won't
 change the behavior of our system. ((("exception handling, differences for events and commands")))
 We want to treat events and commands similarly,
 but not exactly the same.((("message bus", "dispatching events and commands differently")))
@@ -209,7 +210,8 @@ def handle_command(
 
 
 We also change the single `HANDLERS` dict into different ones for
-commands and events. ((("dictionaries", "HANDLERS dicts for commands and events")))((("handlers", "new HANDLERS dicts for commands and events")))((("commands", "handlers for")))Commands can have only one handler, according
+commands and events. ((("dictionaries", "HANDLERS dicts for commands and events")))((("handlers", "new HANDLERS dicts for commands and events")))((("commands", "handlers for")))
+Commands can have only one handler, according
 to our convention:
 
 [[new_handlers_dicts]]
@@ -234,7 +236,8 @@ COMMAND_HANDLERS = {
 === Discussion: Events, Commands, and Error Handling
 
 Many developers get uncomfortable at this point and ask, "What happens when an
-event fails to process? ((("events", "events, commands, and error handling", id="ix_evntcmderr")))((("error handling", "events, commands, and", id="ix_errhnd")))((("commands", "events, commands, and error handling", id="ix_cmndeverr")))How am I supposed to make sure the system is in a
+event fails to process? ((("events", "events, commands, and error handling", id="ix_evntcmderr")))((("error handling", "events, commands, and", id="ix_errhnd")))((("commands", "events, commands, and error handling", id="ix_cmndeverr")))
+How am I supposed to make sure the system is in a
 consistent state?" If we manage to process half of the events during `messagebus.handle` before an
 out-of-memory error kills our process, how do we mitigate problems caused by the
 lost messages?
@@ -406,7 +409,8 @@ can recover from errors when they inevitably occur?
 The first thing we need is to know _when_ an error has occurred, and for that we
 usually rely on logs.
 
-Let's look again at the `handle_event` method ((("message bus", "handle_event method")))from our message bus:
+Let's look again at the `handle_event` method ((("message bus", "handle_event method")))
+from our message bus:
 
 [[messagebus_logging]]
 .Current handle function (src/allocation/service_layer/messagebus.py)
@@ -451,7 +455,8 @@ level of transient failure. This includes things like network hiccups, table
 deadlocks, and brief downtime caused by deployments.
 
 For most of those cases, we can recover elegantly by trying again. As the
-proverb ((("message bus", "handle_event with retries")))((("retries", "message bus handle_event with")))says, "If at first you don't succeed, retry the operation with an
+proverb ((("message bus", "handle_event with retries")))((("retries", "message bus handle_event with")))
+says, "If at first you don't succeed, retry the operation with an
 exponentially increasing back-off period."
 
 [[messagebus_handle_event_with_retry]]
@@ -491,7 +496,8 @@ def handle_event(
 ----
 ====
 
-<1> Tenacity is a Python library ((("Tenacity library")))((("retries", "Tenacity library for")))that implements common patterns for retrying.
+<1> Tenacity is a Python library ((("Tenacity library")))((("retries", "Tenacity library for")))
+that implements common patterns for retrying.
 
 <2> Here we configure our message bus to retry operations up to three times,
     with an exponentially increasing wait between attempts.

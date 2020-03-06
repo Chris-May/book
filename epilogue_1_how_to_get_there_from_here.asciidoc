@@ -803,12 +803,14 @@ In <<chapter_08_events_and_message_bus>>, we update our process so that _dealloc
 _reallocating_ the line happen in two separate units of work.
 You will need monitoring to know when these transactions fail, and tooling to
 replay events. Some of this is made easier by using a transaction log as your
-message broker (e.g., Kafka or pass:[<span class="keep-together">EventStore</span>]). ((("Outbox pattern")))You might also look at the
+message broker (e.g., Kafka or pass:[<span class="keep-together">EventStore</span>]). ((("Outbox pattern")))
+You might also look at the
 https://oreil.ly/sLfnp[Outbox pattern].
 
 We don't discuss idempotency::
 
-We haven't given any real ((("messaging", "idempotent message handling")))((("idempotent message handling")))thought to what happens when handlers are retried.
+We haven't given any real ((("messaging", "idempotent message handling")))((("idempotent message handling")))
+thought to what happens when handlers are retried.
 In practice you will want to make handlers idempotent so that calling them
 repeatedly with the same message will not make repeated changes to state.
 This is a key technique for building reliability, because it enables us to
@@ -817,7 +819,8 @@ safely retry events when they fail.
 There's a lot of good material on idempotent message handling, try starting
 with https://oreil.ly/yERzR["How to Ensure Idempotency in an Eventual Consistent DDD/CQRS Application"] and https://oreil.ly/Ekuhi["(Un)Reliability in Messaging"].
 
-Your events ((("events", "changing schema over time")))will need to change their schema over time::
+Your events ((("events", "changing schema over time")))
+will need to change their schema over time::
 
 You'll need to find some way of documenting your events and sharing schema
 with consumers. We like using JSON schema and markdown because it's simple but

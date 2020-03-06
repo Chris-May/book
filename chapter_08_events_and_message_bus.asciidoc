@@ -55,13 +55,15 @@ git checkout chapter_07_aggregate
 
 === Avoiding Making a Mess
 
-So. Email alerts when we run out of stock. ((("email alerts, sending when out of stock", id="ix_email")))((("events and the message bus", "sending email alerts when out of stock", id="ix_evntMBeml")))When we have new requirements like ones that _really_ have nothing to do with the core domain, it's all too easy to
+So. Email alerts when we run out of stock. ((("email alerts, sending when out of stock", id="ix_email")))((("events and the message bus", "sending email alerts when out of stock", id="ix_evntMBeml")))
+When we have new requirements like ones that _really_ have nothing to do with the core domain, it's all too easy to
 start dumping these things into our web controllers.((("web controllers, sending email alerts via, avoiding")))
 
 
 ==== First, Let's Avoid Making a Mess of Our Web Controllers
 
-As a one-off ((("events and the message bus", "sending email alerts when out of stock", "avoiding messing up web controllers")))hack, this _might_ be OK:
+As a one-off ((("events and the message bus", "sending email alerts when out of stock", "avoiding messing up web controllers")))
+hack, this _might_ be OK:
 
 [[email_in_flask]]
 .Just whack it in the endpoint—what could go wrong? (src/allocation/entrypoints/flask_app.py)
@@ -99,7 +101,8 @@ able to unit test this new feature.
 ==== And Let's Not Make a Mess of Our Model Either
 
 Assuming we don't want to put this code into our web controllers, because
-we want them to be as ((("events and the message bus", "sending email alerts when out of stock", "avoiding messing up domain model")))((("domain model", "email sending code in, avoiding")))thin as possible, we may look at putting it right at
+we want them to be as ((("events and the message bus", "sending email alerts when out of stock", "avoiding messing up domain model")))((("domain model", "email sending code in, avoiding")))
+thin as possible, we may look at putting it right at
 the source, in the model:
 
 [[email_in_model]]
@@ -173,7 +176,8 @@ this code?((("events and the message bus", "sending email alerts when out of sto
 
 === Single Responsibility Principle
 
-Really, this is a violation ((("events and the message bus", "sending email alerts when out of stock", "violating the single responsibility principle")))((("single responsibility principle (SRP)")))of the __single responsibility principle__ (SRP).footnote:[
+Really, this is a violation ((("events and the message bus", "sending email alerts when out of stock", "violating the single responsibility principle")))((("single responsibility principle (SRP)")))
+of the __single responsibility principle__ (SRP).footnote:[
 This principle is the _S_ in https://oreil.ly/AIdSD[SOLID].]
 Our use case is allocation. Our endpoint, service function, and domain methods
 are all called pass:[<code><span class="keep-together">allocate</span></code>], not `allocate_and_send_mail_if_out_of_stock`.
@@ -188,7 +192,8 @@ to change. When we switch from email to SMS, we shouldn't have to update our
 To solve the problem, we're going to split the orchestration
 into separate steps so that the different concerns don't get tangled up.footnote:[
 Our tech reviewer Ed Jung likes to say that the move from imperative to event-based
-flow control ((("orchestration", "changing to choreography")))((("choreography")))changes what used to be _orchestration_ into _choreography_.] The
+flow control ((("orchestration", "changing to choreography")))((("choreography")))
+changes what used to be _orchestration_ into _choreography_.] The
 domain model's job is to know that we're out of stock, but the responsibility
 of sending an alert belongs elsewhere. We should be able to turn this feature
 on or off, or to switch to SMS notifications instead, without needing to change
@@ -254,7 +259,8 @@ class OutOfStock(Event):  #<2>
 When our domain model records a fact that happened, we say it _raises_ an event.((("domain model", "raising events")))((("events and the message bus", "domain model raising events")))
 
 Here's what it will look like from the outside; if we ask `Product` to allocate
-but it can't, it ((("aggregates", "testing Product object to raise events")))should _raise_ an event:
+but it can't, it ((("aggregates", "testing Product object to raise events")))
+should _raise_ an event:
 
 
 [[test_raising_event]]
@@ -313,7 +319,8 @@ class Product:
 
 
 
-NOTE: We're actually addressing a ((("exceptions", "using for control flow")))((("control flow, using exceptions for")))code smell we had until now, which is that we were
+NOTE: We're actually addressing a ((("exceptions", "using for control flow")))((("control flow, using exceptions for")))
+code smell we had until now, which is that we were
     https://oreil.ly/IQB51[using
     exceptions for control flow]. In general, if you're implementing domain
     events, don't raise exceptions to describe the same domain concept.
@@ -324,7 +331,8 @@ NOTE: We're actually addressing a ((("exceptions", "using for control flow")))((
 
 ==== The Message Bus Maps Events to Handlers
 
-A message bus ((("events and the message bus", "message bus mapping events to handlers")))((("message bus", "mapping events to handlers")))basically says, "When I see this event, I should invoke the following
+A message bus ((("events and the message bus", "message bus mapping events to handlers")))((("message bus", "mapping events to handlers")))
+basically says, "When I see this event, I should invoke the following
 handler function." In other words, it's a simple publish-subscribe system.
 Handlers are _subscribed_ to receive events, which we publish to the bus.((("publish-subscribe system", "message bus as", "handlers subscribed to receive events")))
 It
@@ -447,7 +455,8 @@ the message bus.
 === Option 2: The Service Layer Raises Its Own Events
 
 Another variant on this that we've used is to have the service layer
-in charge of creating and ((("service layer", "raising its own events")))((("events and the message bus", "service layer raising its own events")))((("message bus", "service layer raising events and calling messagebus.handle")))raising events directly, rather than having them
+in charge of creating and ((("service layer", "raising its own events")))((("events and the message bus", "service layer raising its own events")))((("message bus", "service layer raising events and calling messagebus.handle")))
+raising events directly, rather than having them
 raised by the domain model:
 
 
@@ -532,7 +541,8 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 <2> After committing, we run through all the objects that our
     repository has seen and pass their events to the message bus.
 
-<3> That relies on the repository ((("aggregates", "repository keeping track of aggregates passing through it")))((("repositories", "repository keeping track of aggregates passing through it")))keeping track of aggregates that have been loaded
+<3> That relies on the repository ((("aggregates", "repository keeping track of aggregates passing through it")))((("repositories", "repository keeping track of aggregates passing through it")))
+keeping track of aggregates that have been loaded
     using a new attribute, `.seen`, as you'll see in the next listing.
 
 NOTE: Are you wondering what happens if one of the
@@ -606,7 +616,8 @@ NOTE: The use of pass:[<code><em>._underscorey()</em></code>] methods and subcla
 
 After the UoW and repository collaborate in this way to automatically keep
 track of live objects and process their events, the service layer can be
-totally ((("service layer", "totally free of event handling concerns")))free of event-handling concerns:
+totally ((("service layer", "totally free of event handling concerns")))
+free of event-handling concerns:
 
 [[services_clean]]
 .Service layer is clean again (src/allocation/service_layer/services.py)
@@ -628,7 +639,8 @@ def allocate(
 ----
 ====
 
-We do also have to remember to change the fakes ((("underscorey methods", "tweaking fakes in service layer to implement")))((("faking", "tweaking fakes in service layer to call super and implement underscorey methods")))((("service layer", "tweaking fakes in to call super and implement underscorey methods")))((("super function", "tweaking fakes in service layer to call")))in the service layer and make them
+We do also have to remember to change the fakes ((("underscorey methods", "tweaking fakes in service layer to implement")))((("faking", "tweaking fakes in service layer to call super and implement underscorey methods")))((("service layer", "tweaking fakes in to call super and implement underscorey methods")))((("super function", "tweaking fakes in service layer to call")))
+in the service layer and make them
 call `super()` in the right places, and to implement underscorey methods, but the
 changes are minimal:
 
@@ -667,7 +679,8 @@ class FakeUnitOfWork(unit_of_work.AbstractUnitOfWork):
 ******************************************************************************
 
 Are you finding all those `._add()` and `._commit()` methods "super-gross," in
-the words of our beloved tech reviewer Hynek? ((("underscorey methods", "avoiding by implementing TrackingRepository wrapper class")))Does it "make you want to beat
+the words of our beloved tech reviewer Hynek? ((("underscorey methods", "avoiding by implementing TrackingRepository wrapper class")))
+Does it "make you want to beat
 Harry around the head with a plushie snake"? Hey, our code listings are
 only meant to be examples, not the perfect solution! Why not go see if you
 can do better?((("repositories", "TrackerRepository wrapper class")))((("composition over inheritance in TrackingRepository wrapper class")))((("inheritance, avoiding use of with wrapper class")))
@@ -707,7 +720,8 @@ See if you can apply a similar pattern to our UoW class in
 order to get rid of those Java-y `_commit()` methods too.((("Unit of Work pattern", "getting rid of underscorey methods in UoW class")))
 You can find the code on https://github.com/cosmicpython/code/tree/chapter_08_events_and_message_bus_exercise[GitHub].
 
-Switching all ((("abstract base classes (ABCs)", "switching to typing.Protocol")))the ABCs to `typing.Protocol` is a good way to force yourself to avoid using inheritance. Let us know if you come up with something nice!
+Switching all ((("abstract base classes (ABCs)", "switching to typing.Protocol")))
+the ABCs to `typing.Protocol` is a good way to force yourself to avoid using inheritance. Let us know if you come up with something nice!
 ******************************************************************************
 
 You might be starting to worry that maintaining these fakes is going to be a
@@ -727,7 +741,8 @@ The magic words "When X, then Y" often tell us about an event that we can make
 concrete in our system. Treating events as first-class things in our model helps
 us make our code more testable and observable, and it helps isolate concerns.
 
-And <<chapter_08_events_and_message_bus_tradeoffs>> shows ((("events and the message bus", "pros and cons or trade-offs")))((("message bus", "pros and cons or trade-offs")))the trade-offs as we
+And <<chapter_08_events_and_message_bus_tradeoffs>> shows ((("events and the message bus", "pros and cons or trade-offs")))((("message bus", "pros and cons or trade-offs")))
+the trade-offs as we
 see them.
 
 [[chapter_08_events_and_message_bus_tradeoffs]]
@@ -802,13 +817,15 @@ Option 1: Service layer raises events and passes them to message bus::
     unit of work.((("service layer", "raising events and passing them to message bus")))
 
 Option 2: Domain model raises events, service layer passes them to message bus::
-    The logic about ((("domain model", "raising events and service layer passing them to message bus")))when to raise an event really should live with the model, so
+    The logic about ((("domain model", "raising events and service layer passing them to message bus")))
+when to raise an event really should live with the model, so
     we can improve our system's design and testability by raising events from
     the domain model. It's easy for our handlers to collect events off the model
     objects after `commit` and pass them to the bus.
 
 Option 3: UoW collects events from aggregates and passes them to message bus::
-    Adding `bus.handle(aggregate.events)` to every ((("Unit of Work pattern", "UoW collecting events from aggregates and passing them to message bus")))((("aggregates", "UoW collecting events from and passing them to message bus")))handler is annoying, so we
+    Adding `bus.handle(aggregate.events)` to every ((("Unit of Work pattern", "UoW collecting events from aggregates and passing them to message bus")))((("aggregates", "UoW collecting events from and passing them to message bus")))
+handler is annoying, so we
     can tidy up by making our unit of work responsible for raising events that
     were raised by loaded objects.
     This is the most complex design and might rely on ORM magic, but it's clean

@@ -602,7 +602,8 @@ class OrderLine:
 ----
 ====
 
-One of the nice things ((("named tuples", seealso="dataclasses")))that dataclasses (or namedtuples) give us is _value
+One of the nice things ((("named tuples", seealso="dataclasses")))
+that dataclasses (or namedtuples) give us is _value
 equality_, which is the fancy way of saying, "Two lines with the same `orderid`,
 `sku`, and `qty` are equal."
 
@@ -686,7 +687,8 @@ long-lived identity. What about a batch, though? That _is_ identified by a
 reference.
 
 We use the term _entity_ to describe a domain object that has long-lived
-identity. ((("entities", "defined")))On the previous page, we introduced a `Name` class as a value object.
+identity. ((("entities", "defined")))
+On the previous page, we introduced a `Name` class as a value object.
 If we take the name Harry Percival and change one letter, we have the new
 `Name` object Barry Percival.
 
@@ -741,7 +743,8 @@ and they are still recognizably the same thing. Batches, in our example, are
 entities. We can allocate lines to a batch, or change the date that we expect
 it to arrive, and it will still be the same entity.
 
-We usually make this explicit in code ((("equality operators, implementing on entities")))by implementing equality operators on
+We usually make this explicit in code ((("equality operators, implementing on entities")))
+by implementing equality operators on
 entities:
 
 
@@ -804,7 +807,8 @@ Sometimes, it just isn't a thing.
 ____
 
 Evans discusses the idea of Domain Service
-operations ((("domain services")))((("service-layer services vs. domain services")))that don't have a natural home in an entity or value object.footnote:[Domain services are
+operations ((("domain services")))((("service-layer services vs. domain services")))
+that don't have a natural home in an entity or value object.footnote:[Domain services are
 not the same thing as the services from the
 <<chapter_04_service_layer,service layer>>, although they are
 often closely related. A domain service represents a business concept or
@@ -907,7 +911,8 @@ That's lovely.
 ==== Exceptions Can Express Domain Concepts Too
 
 We have one final concept to cover: exceptions
-can be used ((("exceptions", "expressing domain concepts")))to express domain concepts too.((("domain exceptions")))
+can be used ((("exceptions", "expressing domain concepts")))
+to express domain concepts too.((("domain exceptions")))
 In our conversations
 with domain experts, we've learned about the possibility that
 an order cannot be allocated because we are _out of stock_, and
@@ -953,7 +958,8 @@ Not everything has to be an object::
     or `get_baz()` waiting to happen.((("functions")))
 
 This is the time to apply your best OO design principles::
-    Revisit the ((("object-oriented design principles")))SOLID principles and all the other good heuristics like "has a versus is-a,"
+    Revisit the ((("object-oriented design principles")))
+SOLID principles and all the other good heuristics like "has a versus is-a,"
     "prefer composition over inheritance," and so on.
 
 You'll((("domain modeling", startref="ix_dommod")))

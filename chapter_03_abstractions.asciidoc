@@ -30,7 +30,8 @@ aggressively. In a large-scale system, though, we become constrained by the
 decisions made elsewhere in the system.
 
 When we're unable to change component A for fear of breaking component B, we say
-that the components ((("coupling")))have become _coupled_. Locally, coupling is a good thing: it's
+that the components ((("coupling")))
+have become _coupled_. Locally, coupling is a good thing: it's
 a sign that our code is working together, each component supporting the others, all of them
 fitting in place like the gears of a watch. In jargon, we say this works when
 there is high _cohesion_ between the coupled elements.((("cohesion, high, between coupled elements")))
@@ -38,7 +39,8 @@ there is high _cohesion_ between the coupled elements.((("cohesion, high, betwee
 Globally, coupling is a nuisance: it increases((("coupling", "disadvantages of")))
 the risk and the cost of changing
 our code, sometimes to the point where we feel unable to make any changes at
-all. ((("Ball of Mud pattern")))This is the problem with the Ball of Mud pattern: as the application grows,
+all. ((("Ball of Mud pattern")))
+This is the problem with the Ball of Mud pattern: as the application grows,
 if we're unable to prevent coupling between elements that have no cohesion, that
 coupling increases superlinearly until we are no longer able to effectively
 change our systems.
@@ -276,7 +278,8 @@ What could we do to rewrite our code to make it more testable?((("filesystems", 
 
 First, we need to think about what our code needs from the filesystem.
 Reading through the code, we can see that three distinct things are happening.
-We can think ((("responsibilities of code")))of these as three distinct _responsibilities_ that the code has:
+We can think ((("responsibilities of code")))
+of these as three distinct _responsibilities_ that the code has:
 
 1. We interrogate the filesystem by using `os.walk` and determine hashes for a
    series of paths. This is similar in both the source and the
@@ -361,7 +364,8 @@ by Gary Bernhardt as
 https://oreil.ly/wnad4[Functional
 Core, Imperative Shell], or FCIS).
 
-Let's start off by splitting the code ((("business logic", "separating from state in code")))((("state", "splitting off from logic in the program")))((("I/O", "disentangling details from program logic")))to separate the stateful parts from
+Let's start off by splitting the code ((("business logic", "separating from state in code")))((("state", "splitting off from logic in the program")))((("I/O", "disentangling details from program logic")))
+to separate the stateful parts from
 the logic.
 
 And our top-level function will contain almost no logic at all; it's just an
@@ -484,7 +488,8 @@ At some point, though, we want to test bigger
 chunks of the system together.((("dependencies", "edge-to-edge testing with dependency injection", id="ix_depinj")))
 
 We _could_ return to our end-to-end tests, but those are still as tricky to
-write and maintain as before. ((("faking", "faking I/O in edge-to-edge test")))Instead, we often write tests that invoke a whole
+write and maintain as before. ((("faking", "faking I/O in edge-to-edge test")))
+Instead, we often write tests that invoke a whole
 system together but fake the I/O, sort of _edge to edge_:
 
 
@@ -619,7 +624,8 @@ code work with a `--dry-run` flag, nor will it help you run against an FTP
 server. For that, you'll need to introduce abstractions.
 
 *  Tests that use mocks _tend_ to be more coupled to the implementation details
-of the codebase. ((("coupling", "in tests that use mocks")))That's because mock tests verify the interactions between
+of the codebase. ((("coupling", "in tests that use mocks")))
+That's because mock tests verify the interactions between
 things: did we call `shutil.copy` with the right arguments? This coupling between
 code and test _tends_ to make tests more brittle, in our experience.
 
@@ -648,7 +654,8 @@ our in-memory repository is a good example. But you can use them to make asserti
   the end state of a system rather than the behaviors along the way, so
   they're associated with classic-style TDD.
 
-We're slightly conflating mocks with ((("Fowler, Martin")))((("stubbing, mocks and stubs")))((("&quot;Mocks Aren&#x27;t Stubs&quot; (Fowler)", primary-sortas="Mocks")))spies and fakes with stubs here, and you
+We're slightly conflating mocks with ((("Fowler, Martin")))((("stubbing, mocks and stubs")))((("&quot;Mocks Aren&#x27;t Stubs&quot; (Fowler)", primary-sortas="Mocks")))
+spies and fakes with stubs here, and you
 can read the long, correct answer in Martin Fowler's classic essay on the subject
 called https://oreil.ly/yYjBN["Mocks Aren't Stubs"].
 
@@ -716,7 +723,8 @@ dependency injection more explicit and centralized.
 
 === Wrap-Up
 
-We'll see this idea come up again and ((("testing", "after implementing chosen abstraction", "avoiding use of mock.patch", startref="ix_tstaftabsmck")))((("abstractions", "implementing chosen abstraction", startref="ix_absimpl")))((("testing", "after implementing chosen abstraction", startref="ix_tstaftabs")))((("filesystems", "writing code to synchronize source and target directories", "implementing chosen abstraction", startref="ix_filesyncimp")))again in the book: we can make our
+We'll see this idea come up again and ((("testing", "after implementing chosen abstraction", "avoiding use of mock.patch", startref="ix_tstaftabsmck")))((("abstractions", "implementing chosen abstraction", startref="ix_absimpl")))((("testing", "after implementing chosen abstraction", startref="ix_tstaftabs")))((("filesystems", "writing code to synchronize source and target directories", "implementing chosen abstraction", startref="ix_filesyncimp")))
+again in the book: we can make our
 systems easier to test and maintain by simplifying the interface between our
 business logic and messy I/O.((("abstractions", "simplifying interface between business logic and I/O")))((("business logic", "abstractions simplifying interface with messy I/O")))((("I/O", "simplifying interface with business logic using abstractions")))
 Finding the right abstraction is tricky, but here are

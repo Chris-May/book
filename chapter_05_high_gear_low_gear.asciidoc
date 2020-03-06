@@ -68,7 +68,8 @@ already a healthy-looking test pyramid.
 
 === Should Domain Layer Tests Move to the Service Layer?
 
-Let's see what happens if we take this a step further. ((("service layer", "domain layer tests moving to")))((("test-driven development (TDD)", "domain layer tests moving to service layer")))((("domain layer", "tests moving to service layer")))Since we can test our
+Let's see what happens if we take this a step further. ((("service layer", "domain layer tests moving to")))((("test-driven development (TDD)", "domain layer tests moving to service layer")))((("domain layer", "tests moving to service layer")))
+Since we can test our
 software against the service layer, we don't really need tests for the domain
 model anymore. Instead, we could rewrite all of the domain-level tests from
 <<chapter_01_domain_model>> in terms of the service layer:
@@ -320,7 +321,8 @@ into one place.
 
 ==== Adding a Missing Service
 
-We could go one step further, though. ((("test-driven development (TDD)", "fully decoupling service layer from the domain", "adding missing service")))If we had a service to add stock,
+We could go one step further, though. ((("test-driven development (TDD)", "fully decoupling service layer from the domain", "adding missing service")))
+If we had a service to add stock,
 we could use that and make our service-layer tests fully expressed
 in terms of the service layer's official use cases, removing all dependencies
 on the domain:
@@ -508,13 +510,15 @@ can be useful. But see also <<chapter_08_events_and_message_bus>> and
 <<fake_message_bus>>.]
 
 Maintain a small core of tests written against your domain model::
-    These tests ((("domain model", "maintaining small core of tests written against")))have highly focused coverage and are more brittle, but they have
+    These tests ((("domain model", "maintaining small core of tests written against")))
+have highly focused coverage and are more brittle, but they have
     the highest feedback. Don't be afraid to delete these tests if the
     functionality is later covered by tests at the service layer.
 
 Error handling counts as a feature::
     Ideally, your application will be structured such that all errors that
-    bubble ((("error handling", "counting as a feature")))up to your entrypoints (e.g., Flask) are handled in the same way.
+    bubble ((("error handling", "counting as a feature")))
+up to your entrypoints (e.g., Flask) are handled in the same way.
     This means you need to test only the happy path for each feature, and to
     reserve one end-to-end test for all unhappy paths (and many unhappy path
     unit tests, of course).((("test-driven development (TDD)", startref="ix_TDD")))

@@ -157,7 +157,8 @@ might mean we need to reallocate a customer's order.
 
 Where does this logic go?
 
-Well, the Warehouse system ((("commands", "command flow when warehouse knows stock is damaged")))knows that the stock has been damaged, so maybe it
+Well, the Warehouse system ((("commands", "command flow when warehouse knows stock is damaged")))
+knows that the stock has been damaged, so maybe it
 should own this process, as shown in <<command_flow_diagram_2>>.
 
 [[command_flow_diagram_2]]
@@ -209,7 +210,8 @@ guaranteed. The failure state of our batches service has bubbled up and is
 affecting the reliability of our order service.
 
 When two things have to be changed together, we say that they are _coupled_. We
-can think of this failure ((("coupling", "failure cascade as temporal coupling")))((("temporal coupling")))cascade as a kind of _temporal coupling_: every part
+can think of this failure ((("coupling", "failure cascade as temporal coupling")))((("temporal coupling")))
+cascade as a kind of _temporal coupling_: every part
 of the system has to work at the same time for any part of it to work. As the
 system gets bigger, there is an exponentially increasing probability that some
 part is degraded.((("commands", "command flow with error")))
@@ -262,7 +264,8 @@ components need to agree only on the name of an event and the names of fields
 it carries.
 
 We can never completely avoid coupling, except by having our software not talk
-to any other software. ((("coupling", "avoiding inappropriate coupling")))What we want is to avoid _inappropriate_ coupling.
+to any other software. ((("coupling", "avoiding inappropriate coupling")))
+What we want is to avoid _inappropriate_ coupling.
 Connascence provides a mental model for understanding the strength and type of
 coupling inherent in different architectural styles. Read all about it at
 http://www.connascence.io[connascence.io].
@@ -271,7 +274,8 @@ http://www.connascence.io[connascence.io].
 
 === The Alternative: Temporal Decoupling Using Asynchronous Messaging
 
-How do we get ((("error handling", "in distributed systems", startref="ix_errhnddst")))((("microservices", "event-based integration", "error handling in distributed systems", startref="ix_mcroevnterr")))appropriate coupling?((("microservices", "event-based integration", "temporal decoupling using asynchronous messaging")))((("coupling", "temporal decoupling using asynchronous messaging")))((("asynchronous messaging, temporal decoupling with")))((("temporal decoupling using asynchronous messaging")))((("messaging", "asynchronous, temporal decoupling with")))
+How do we get ((("error handling", "in distributed systems", startref="ix_errhnddst")))((("microservices", "event-based integration", "error handling in distributed systems", startref="ix_mcroevnterr")))
+appropriate coupling?((("microservices", "event-based integration", "temporal decoupling using asynchronous messaging")))((("coupling", "temporal decoupling using asynchronous messaging")))((("asynchronous messaging, temporal decoupling with")))((("temporal decoupling using asynchronous messaging")))((("messaging", "asynchronous, temporal decoupling with")))
 We've already seen part of the answer, which is that we should think in
 terms of verbs, not nouns. Our domain model is about modeling a business
 process. It's not a static data model about a thing; it's a model of a verb.
@@ -288,7 +292,8 @@ can happen _later_, so long as it happens.
 NOTE: If this sounds familiar, it should!  Segregating responsibilities is
     the same process we went through when designing our aggregates and commands.
 
-Like aggregates, microservices ((("consistency boundaries", "microservices as")))should be _consistency boundaries_. Between two
+Like aggregates, microservices ((("consistency boundaries", "microservices as")))
+should be _consistency boundaries_. Between two
 services, we can accept eventual consistency, and that means we don't need to
 rely on synchronous calls. Each service accepts commands from the outside world
 and raises events to record the result. Other services can listen to those
@@ -499,7 +504,8 @@ def publish(channel, event: events.Event):  #<1>
 
 ==== Our New Outgoing Event
 
-Here's what the `Allocated` event will ((("Allocated event")))look like:
+Here's what the `Allocated` event will ((("Allocated event")))
+look like:
 
 [[allocated_event]]
 .New event (src/allocation/domain/events.py)
