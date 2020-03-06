@@ -493,14 +493,14 @@ of your test coverage to unit tests and develop a healthy test pyramid.((("test-
 
 Aim for one end-to-end test per feature::
     This might be written against an HTTP API, for example.((("end-to-end tests", "aiming for one test per feature")))
-The objective
+    The objective
     is to demonstrate that the feature works, and that all the moving parts
     are glued together correctly.
 
 Write the bulk of your tests against the service layer::
     These edge-to-edge tests offer a good trade-off between coverage,
     runtime, and efficiency.((("service layer", "writing bulk of tests against")))
-Each test tends to cover one code path of a
+    Each test tends to cover one code path of a
     feature and use fakes for I/O. This is the place to exhaustively
     cover all the edge cases and the ins and outs of your business logic.footnote:[
 A valid concern about writing tests at a higher level is that it can lead to
@@ -511,28 +511,27 @@ can be useful. But see also <<chapter_08_events_and_message_bus>> and
 
 Maintain a small core of tests written against your domain model::
     These tests ((("domain model", "maintaining small core of tests written against")))
-have highly focused coverage and are more brittle, but they have
+    have highly focused coverage and are more brittle, but they have
     the highest feedback. Don't be afraid to delete these tests if the
     functionality is later covered by tests at the service layer.
 
 Error handling counts as a feature::
     Ideally, your application will be structured such that all errors that
     bubble ((("error handling", "counting as a feature")))
-up to your entrypoints (e.g., Flask) are handled in the same way.
+    up to your entrypoints (e.g., Flask) are handled in the same way.
     This means you need to test only the happy path for each feature, and to
     reserve one end-to-end test for all unhappy paths (and many unhappy path
     unit tests, of course).((("test-driven development (TDD)", startref="ix_TDD")))
 
 ******************************************************************************
 
-A few
-things will help along the way:
+A few things will help along the way:
 
 * Express your service layer in terms of primitives rather than domain objects.
 
 * In an ideal world, you'll have all the services you need to be able to test
   entirely against the service layer, rather than hacking state via
   repositories or the database.((("test-driven development (TDD)", "types of tests, rules of thumb for")))
-This pays off in your end-to-end tests as well.
+  This pays off in your end-to-end tests as well.
 
 Onto the next chapter!

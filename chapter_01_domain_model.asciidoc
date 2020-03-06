@@ -303,7 +303,7 @@ class Batch:
     https://github.com/python-leap/code/tree/chapter_01_domain_model[chapter_01_domain_model]).
 
 <3> Type hints are still a matter of controversy in the Python world.((("type hints")))
-For
+    For
     domain models, they can sometimes help to clarify or document what the
     expected arguments are, and people with IDEs are often grateful for them.
     You may decide the price paid in terms of readability is too high.
@@ -944,7 +944,7 @@ Domain modeling::
 
 Distinguish entities from value objects::
     A value object is defined by its attributes.((("value objects", "entities versus")))((("entities", "value objects versus")))
-It's usually best
+    It's usually best
     implemented as an immutable type. If you change an attribute on
     a Value Object, it represents a different object. In contrast,
     an entity has attributes that may vary over time and it will still be the
@@ -959,13 +959,11 @@ Not everything has to be an object::
 
 This is the time to apply your best OO design principles::
     Revisit the ((("object-oriented design principles")))
-SOLID principles and all the other good heuristics like "has a versus is-a,"
+    SOLID principles and all the other good heuristics like "has a versus is-a,"
     "prefer composition over inheritance," and so on.
 
-You'll((("domain modeling", startref="ix_dommod")))
-also want to think about consistency boundaries and aggregates::
-    But that's a topic for <<chapter_07_aggregate>>.
-
+You'll also want to think about consistency boundaries and aggregates::
+    But that's a topic for <<chapter_07_aggregate>>.((("domain modeling", startref="ix_dommod")))
 *****************************************************************
 
 We won't bore you too much with the implementation, but the main thing

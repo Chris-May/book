@@ -543,7 +543,7 @@ This is especially likely if there are any foreign-key relationships on your obj
 
 NOTE: In all fairness, we should say that SQLAlchemy is quite good at avoiding
     the `SELECT N+1` problem.((("SQLAlchemy", "SELECT N+1 problem and")))((("eager loading")))
-It doesn't display it in the preceding example, and
+    It doesn't display it in the preceding example, and
     you can request
     https://oreil.ly/XKDDm[eager loading]
     explicitly to avoid it when dealing with joined objects.
@@ -835,7 +835,7 @@ are against our view.
 
 TIP: Event handlers are a great way to manage updates to a read model,
     if you decide you need one.((("event handlers", "managing updates to read model")))
-They also make it easy to change the
+    They also make it easy to change the
     implementation of that read model at a later date.
 
 .Exercise for the Reader

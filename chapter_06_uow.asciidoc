@@ -206,12 +206,12 @@ class AbstractUnitOfWork(abc.ABC):
 <2> If you've never seen a context manager, +++<code>__enter__</code>+++ and +++<code>__exit__</code>+++ are
     the two magic methods that execute when we enter the `with` block and
     when we exit it, respectively.((("&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f; magic methods", primary-sortas="enter and exit")))
-They're our setup and teardown phases.((("magic methods", "&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f;", secondary-sortas="enter")))
+    They're our setup and teardown phases.((("magic methods", "&#x5f;&#x5f;enter&#x5f;&#x5f; and &#x5f;&#x5f;exit&#x5f;&#x5f;", secondary-sortas="enter")))
 
 <3> We'll call this method to explicitly commit our work when we're ready.
 
 <4> If we don't((("rollbacks")))
-commit, or if we exit the context manager by raising an error,
+    commit, or if we exit the context manager by raising an error,
     we do a `rollback`. (The rollback has no effect if `commit()` has been
     called. Read on for more discussion of this.)
 
@@ -439,7 +439,7 @@ def test_rolls_back_on_error(session_factory):
 TIP: We haven't shown it here, but it can be worth testing some of the more
     "obscure" database behavior, like transactions, against the "real"
     database—that is, the same engine.((("databases", "testing transactions against real database")))
-For now, we're getting away with using
+    For now, we're getting away with using
     SQLite instead of Postgres, but in <<chapter_07_aggregate>>, we'll switch
     some of the tests to using the real database. It's convenient that our UoW
     class makes that easy!
@@ -682,7 +682,7 @@ SQLAlchemy `Session`.
 *****************************************************************
 The Unit of Work pattern is an abstraction around data integrity::
     It helps to enforce ((("Unit of Work pattern", "recap of important points")))
-the consistency of our domain model, and improves
+    the consistency of our domain model, and improves
     performance, by letting us perform a single _flush_ operation at the
     end of an operation.
 

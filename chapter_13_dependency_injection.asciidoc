@@ -236,7 +236,7 @@ onto the message bus feels like a violation of the SRP.
 Instead, we'll((("composition root")))((("bootstrapping", "dependency injection with")))
 reach for a pattern called _Composition Root_ (a bootstrap
 script to you and me),footnote:[Because Python is not a "pure" OO language, Python developers aren't necessarily used to the concept of needing to _compose_ a set of objects into a working application. We just pick our entrypoint and run code from top to bottom.]
- and we'll do a bit of "manual DI" (dependency injection without a
+and we'll do a bit of "manual DI" (dependency injection without a
 framework). See <<bootstrap_new_image>>.footnote:[Mark Seemann calls this https://oreil.ly/iGpDL[_Pure DI_] or sometimes _Vanilla DI_.]
 
 [[bootstrap_new_image]]
@@ -317,7 +317,7 @@ allocate_composed(cmd)
 ====
 
 <1> The difference((("closures", "difference from partial functions")))((("partial functions", "difference from closures")))
-between closures (lambdas or named functions) and
+    between closures (lambdas or named functions) and
     `functools.partial` is that the former use
     https://docs.python-guide.org/writing/gotchas/#late-binding-closures[late
     binding of variables], which can be a source of confusion if
@@ -1034,7 +1034,7 @@ for practice regarding adapters:
 
 * Once you have more than one adapter, you'll start to feel a lot of pain
   from passing dependencies around((("bootstrapping", "dependency injection and bootstrap recap")))((("dependency injection", "recap of DI and bootstrap")))
-manually, unless you do some kind of
+  manually, unless you do some kind of
   _dependency injection._
 
 * Setting up dependency injection is just one of many typical

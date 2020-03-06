@@ -376,7 +376,7 @@ def test_orderline_mapper_can_save_lines(session):
 
 <1> If you haven't used pytest, the `session` argument to this test needs
     explaining. ((("pytest", "session argument")))
-You don't need to worry about the details of pytest or its
+    You don't need to worry about the details of pytest or its
     fixtures for the purposes of this book, but the short explanation is that
     you can define common dependencies for your tests as "fixtures," and
     pytest will inject them to the tests that need them by looking at their
@@ -525,7 +525,7 @@ class AbstractRepository(abc.ABC):
 
 <1> Python tip: `@abc.abstractmethod` is one of the only things that makes
     ABCs actually "work" in Python.((("abstract methods")))((("@abc.abstractmethod")))
-Python will refuse to let you instantiate
+    Python will refuse to let you instantiate
     a class that does not implement all the `abstractmethods` defined in its
     parent class.footnote:[To really reap the benefits of ABCs (such as they
 may be), be running helpers like `pylint` and `mypy`.]
@@ -618,7 +618,7 @@ image::images/apwp_0205.png[]
 ----
 
 
-As always, we start with a test.((("Repository pattern", "testing the  repository with saving an object")))
+As always, we start with a test.((("Repository pattern", "testing the repository with saving an object")))
 This would probably be classified as an
 integration test, since we're checking that our code (the repository) is
 correctly integrated with the database; hence, the tests tend to mix
